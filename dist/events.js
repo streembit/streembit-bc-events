@@ -1,0 +1,78 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.EVENTS = void 0;
+// Export event names as constants for easy reference
+exports.EVENTS = {
+    // CLI
+    CLI_SUBMIT_TRANSACTION: 'cli:submit-transaction',
+    CLI_TRANSACTION_RESPONSE: 'cli:transaction-response',
+    CLI_SUBMIT_VALIDATION_REQUEST: 'cli:submit-validation-request',
+    CLI_VALIDATION_RESPONSE: 'cli:validation-response',
+    // Mempool
+    MEMPOOL_TRANSACTION: 'mempool:transaction',
+    MEMPOOL_RETURN: 'mempool:return',
+    TX_REJECTED: 'tx:rejected',
+    TX_REMOVED: 'tx:removed',
+    // Attestations
+    VALIDATOR_ATTESTATION: 'validator:attestation',
+    ATTESTATIONS_COMPLETE: 'attestations:complete',
+    ATTESTATION_REQUEST: 'attestation:request',
+    // Registry
+    REGISTRY_NODES_UPDATED: 'registry:nodes-updated',
+    REGISTRY_VALIDATORS_UPDATED: 'registry:validators-updated',
+    // Consensus
+    CONSENSUS_ROLE_CHANGED: 'consensus:role-changed',
+    CONSENSUS_SLOT_TICK: 'consensus:slot-tick',
+    SCHEDULE_CHANGE: 'schedule:change',
+    // Shadow
+    SHADOW_PREPARE: 'shadow:prepare',
+    SHADOW_TAKEOVER: 'shadow:takeover',
+    // Blocks
+    BLOCK_FINALIZED: 'block:finalized',
+    NETWORK_BLOCK_RECEIVED: 'network:block-received',
+    BLOCK_PROPAGATE: 'block:propagate',
+    PEER_BLOCK: 'peer:block',
+    PEER_BLOCK_INBOUND: 'peer:block-inbound',
+    BLOCK_REORG: 'block:reorg',
+    // Deposits
+    DEPOSIT_LOCKED: 'deposit:locked',
+    DEPOSIT_RELEASED: 'deposit:released',
+    DEPOSIT_SLASHED: 'deposit:slashed',
+    // State
+    STATE_BALANCE_UPDATED: 'state:balance-updated',
+    STATE_ROOT_UPDATED: 'state:root-updated',
+    // Network
+    NETWORK_BROADCAST_TX: 'network:broadcast-tx',
+    NETWORK_BROADCAST_BLOCK: 'network:broadcast-block',
+    NETWORK_PEER_CONNECTED: 'network:peer-connected',
+    NETWORK_PEER_DISCONNECTED: 'network:peer-disconnected',
+    NETWORK_SYNC_STARTED: 'network:sync-started',
+    NETWORK_SYNC_COMPLETED: 'network:sync-completed',
+    // System
+    SYSTEM_READY: 'system:ready',
+    SYSTEM_SHUTDOWN: 'system:shutdown',
+    SYSTEM_ERROR: 'system:error',
+    SYSTEM_METRIC: 'system:metric',
+    // Contract Service Events - Requests
+    CONTRACT_STORAGE_GET: 'contract:storage.get',
+    CONTRACT_CRYPTO_VERIFY: 'contract:crypto.verify',
+    CONTRACT_CRYPTO_HASH: 'contract:crypto.hash',
+    CONTRACT_ACCOUNT_GETBALANCE: 'contract:account.getBalance',
+    CONTRACT_MATH_DECIMAL: 'contract:math.decimal',
+    CONTRACT_MATH_ADD: 'contract:math.add',
+    CONTRACT_MATH_SUBTRACT: 'contract:math.subtract',
+    CONTRACT_MATH_COMPARE: 'contract:math.compare',
+    CONTRACT_ENCODING_TOJSON: 'contract:encoding.toJSON',
+    CONTRACT_TRANSACTION_VALIDATESIGNATURES: 'contract:transaction.validateSignatures',
+    // Contract Service Events - Responses
+    CONTRACT_STORAGE_RESPONSE: 'contract:storage.response',
+    CONTRACT_CRYPTO_VERIFY_RESPONSE: 'contract:crypto.verify.response',
+    CONTRACT_CRYPTO_HASH_RESPONSE: 'contract:crypto.hash.response',
+    CONTRACT_ACCOUNT_GETBALANCE_RESPONSE: 'contract:account.getBalance.response',
+    CONTRACT_MATH_DECIMAL_RESPONSE: 'contract:math.decimal.response',
+    CONTRACT_MATH_ADD_RESPONSE: 'contract:math.add.response',
+    CONTRACT_MATH_SUBTRACT_RESPONSE: 'contract:math.subtract.response',
+    CONTRACT_MATH_COMPARE_RESPONSE: 'contract:math.compare.response',
+    CONTRACT_ENCODING_TOJSON_RESPONSE: 'contract:encoding.toJSON.response',
+    CONTRACT_TRANSACTION_VALIDATESIGNATURES_RESPONSE: 'contract:transaction.validateSignatures.response'
+};
