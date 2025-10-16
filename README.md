@@ -13,8 +13,45 @@ A type-safe, centralized event bus for Streembit Blockchain applications. Built 
 
 ## Installation
 
+Since this package is not published to npm, install it directly from GitHub:
+
 ```bash
-npm install streembit-bc-events
+npm install github:streembit/streembit-bc-events
+```
+
+Or add it to your `package.json`:
+
+```json
+{
+  "dependencies": {
+    "streembit-bc-events": "github:streembit/streembit-bc-events",
+    "streembit-bc-types": "github:streembit/streembit-bc-types"
+  }
+}
+```
+
+**Note**: This package depends on `streembit-bc-types` for type definitions like `Block`, `Transaction`, and `NodeIdentity`. Make sure you have `streembit-bc-types` installed in your project as well.
+
+## Quick Start
+
+Here's a complete example of how to use this package in a TypeScript project:
+
+```typescript
+// 1. Import the event bus and event constants
+import eventBus, { EVENTS } from 'streembit-bc-events';
+
+// 2. Import types from streembit-bc-types (installed separately)
+import type { Block, Transaction } from 'streembit-bc-types';
+
+// 3. Listen for events
+eventBus.on(EVENTS.BLOCK_FINALIZED, (block: Block, index: number, hash: string, txIds: string[]) => {
+  console.log(`Block ${index} finalized with hash ${hash}`);
+  console.log(`Contains ${txIds.length} transactions`);
+});
+
+// 4. Emit events
+const myBlock: Block = { /* your block data */ };
+eventBus.emit(EVENTS.BLOCK_FINALIZED, myBlock, 100, '0xabc123...', ['tx1', 'tx2']);
 ```
 
 ## Usage
@@ -27,6 +64,12 @@ The event bus is a singleton instance that is automatically initialized on first
 import eventBus, { EVENTS } from 'streembit-bc-events';
 ```
 
+If you need type definitions for event payloads or blockchain entities, import them from `streembit-bc-types`:
+
+```typescript
+import type { Block, Transaction, NodeIdentity } from 'streembit-bc-types';
+```
+
 ### Basic Event Emitting and Listening
 
 #### Emitting Events
@@ -35,13 +78,15 @@ Use the `emit()` method to publish events. TypeScript will enforce the correct p
 
 ```typescript
 import eventBus, { EVENTS } from 'streembit-bc-events';
+import type { Block } from 'streembit-bc-types';
 
 // Emit a block finalized event
-const block = { height: 100, transactions: [...] };
+const block: Block = { /* your block data */ };
+const index = 100;
 const hash = '0xabc123...';
 const txIds = ['tx1', 'tx2', 'tx3'];
 
-eventBus.emit(EVENTS.BLOCK_FINALIZED, block, 100, hash, txIds);
+eventBus.emit(EVENTS.BLOCK_FINALIZED, block, index, hash, txIds);
 ```
 
 #### Listening to Events
@@ -50,10 +95,11 @@ Use the `on()` method to subscribe to events. The listener callback will be invo
 
 ```typescript
 import eventBus, { EVENTS } from 'streembit-bc-events';
+import type { Block } from 'streembit-bc-types';
 
 // Listen for block finalization
-eventBus.on(EVENTS.BLOCK_FINALIZED, (block, height, hash, txIds) => {
-  console.log(`Block finalized at height ${height}`);
+eventBus.on(EVENTS.BLOCK_FINALIZED, (block: Block, index: number, hash: string, txIds: string[]) => {
+  console.log(`Block finalized at index ${index}`);
   console.log(`Block hash: ${hash}`);
   console.log(`Transactions: ${txIds.join(', ')}`);
 });
@@ -78,7 +124,9 @@ eventBus.once(EVENTS.SYSTEM_READY, () => {
 Use `off()` to remove a specific listener.
 
 ```typescript
-const handleTransaction = (tx: object) => {
+import type { Transaction } from 'streembit-bc-types';
+
+const handleTransaction = (tx: Transaction) => {
   console.log('Transaction received:', tx);
 };
 
@@ -94,11 +142,13 @@ eventBus.off(EVENTS.MEMPOOL_TRANSACTION, handleTransaction);
 You can register multiple listeners for the same event. They will all be invoked in the order they were registered.
 
 ```typescript
-eventBus.on(EVENTS.BLOCK_FINALIZED, (block, height) => {
+import type { Block } from 'streembit-bc-types';
+
+eventBus.on(EVENTS.BLOCK_FINALIZED, (block: Block, index: number, hash: string, txIds: string[]) => {
   console.log('Listener 1: Block finalized');
 });
 
-eventBus.on(EVENTS.BLOCK_FINALIZED, (block, height) => {
+eventBus.on(EVENTS.BLOCK_FINALIZED, (block: Block, index: number, hash: string, txIds: string[]) => {
   console.log('Listener 2: Block finalized');
 });
 ```
@@ -109,15 +159,24 @@ The event bus supports the following categories of events:
 
 #### CLI Events
 ```typescript
+import { randomUUID } from 'crypto';
+
 // Submit transaction for validation
-eventBus.emit(EVENTS.CLI_SUBMIT_VALIDATION_REQUEST, txJson);
+const requestId = randomUUID();
+
+eventBus.emit(EVENTS.CLI_SUBMIT_VALIDATION_REQUEST, {
+  requestId,
+  txJson: '{"type": "transfer", "amount": "100"}'
+});
 
 // Receive validation response
-eventBus.on(EVENTS.CLI_VALIDATION_RESPONSE, (result) => {
-  if (result.success) {
-    console.log('Transaction validated:', result.txJson);
-  } else {
-    console.error('Validation errors:', result.errors);
+eventBus.on(EVENTS.CLI_VALIDATION_RESPONSE, (response) => {
+  if (response.requestId === requestId) {
+    if (response.success) {
+      console.log('Transaction validated:', response.txJson);
+    } else {
+      console.error('Validation errors:', response.errors);
+    }
   }
 });
 ```
@@ -137,25 +196,34 @@ eventBus.on(EVENTS.CONSENSUS_SLOT_TICK, (slot, slotOwner) => {
 
 #### Network Events
 ```typescript
+import type { Transaction } from 'streembit-bc-types';
+
 // Listen for peer connections
-eventBus.on(EVENTS.NETWORK_PEER_CONNECTED, (peerId, address) => {
+eventBus.on(EVENTS.NETWORK_PEER_CONNECTED, (peerId: string, address: string) => {
   console.log(`Peer ${peerId} connected from ${address}`);
 });
 
 // Broadcast a transaction
+const transaction: Transaction = { /* your transaction data */ };
 eventBus.emit(EVENTS.NETWORK_BROADCAST_TX, transaction);
 ```
 
 #### State Management Events
 ```typescript
 // Listen for balance updates
-eventBus.on(EVENTS.STATE_BALANCE_UPDATED, (address, asset, oldBalance, newBalance, txId) => {
+eventBus.on(EVENTS.STATE_BALANCE_UPDATED, (
+  address: string,
+  asset: string,
+  oldBalance: string,
+  newBalance: string,
+  txId: string
+) => {
   console.log(`${address} balance updated: ${oldBalance} → ${newBalance} ${asset}`);
 });
 
 // Listen for state root updates
-eventBus.on(EVENTS.STATE_ROOT_UPDATED, (oldRoot, newRoot, blockHeight) => {
-  console.log(`State root updated at block ${blockHeight}`);
+eventBus.on(EVENTS.STATE_ROOT_UPDATED, (oldRoot: string, newRoot: string, blockIndex: number) => {
+  console.log(`State root updated at block ${blockIndex}`);
 });
 ```
 
@@ -398,6 +466,7 @@ One of the key advantages of this event bus is enabling communication between is
 ```typescript
 // blockchain-app/src/consensus/engine.ts
 import eventBus, { EVENTS } from 'streembit-bc-events';
+import type { Block } from 'streembit-bc-types';
 
 // Listen for contract storage requests
 eventBus.on(EVENTS.CONTRACT_STORAGE_GET, (request) => {
@@ -411,19 +480,24 @@ eventBus.on(EVENTS.CONTRACT_STORAGE_GET, (request) => {
 });
 
 // Emit block finalized event
-eventBus.emit(EVENTS.BLOCK_FINALIZED, block, height, hash, txIds);
+const block: Block = { /* your block data */ };
+const index = 100;
+const hash = '0xabc...';
+const txIds = ['tx1', 'tx2'];
+eventBus.emit(EVENTS.BLOCK_FINALIZED, block, index, hash, txIds);
 ```
 
 #### Isolated Smart Contract Sandbox
 ```typescript
 // blockchain-app/src/contracts/sandbox/vm.ts
 import eventBus, { EVENTS } from 'streembit-bc-events';
+import type { Block } from 'streembit-bc-types';
 import { randomUUID } from 'crypto';
 
 // Same singleton instance!
 // Listen for blocks
-eventBus.on(EVENTS.BLOCK_FINALIZED, (block, height) => {
-  console.log('Sandbox: Block finalized at height', height);
+eventBus.on(EVENTS.BLOCK_FINALIZED, (block: Block, index: number, hash: string, txIds: string[]) => {
+  console.log('Sandbox: Block finalized at index', index);
   updateContractState(block);
 });
 
@@ -449,19 +523,24 @@ eventBus.emit(EVENTS.CONTRACT_STORAGE_GET, {
 Always use the `EVENTS` constants instead of string literals to prevent typos and enable IDE autocomplete.
 
 ```typescript
+import type { Block } from 'streembit-bc-types';
+
 // ✅ Good - Type safe, autocomplete works
-eventBus.emit(EVENTS.BLOCK_FINALIZED, block, height, hash, txIds);
+const block: Block = { /* your block data */ };
+eventBus.emit(EVENTS.BLOCK_FINALIZED, block, 100, '0xabc...', ['tx1']);
 
 // ❌ Bad - Prone to typos, no type checking
-eventBus.emit('block:finalized', block, height, hash, txIds);
+eventBus.emit('block:finalized', block, 100, '0xabc...', ['tx1']);
 ```
 
 #### 2. Clean Up Listeners
 Remove event listeners when they're no longer needed to prevent memory leaks, especially in long-running applications.
 
 ```typescript
+import type { Block } from 'streembit-bc-types';
+
 class MyService {
-  private handleBlock = (block: object) => {
+  private handleBlock = (block: Block, index: number, hash: string, txIds: string[]) => {
     // Handle block
   };
 
@@ -479,12 +558,14 @@ class MyService {
 Always wrap listener logic in try-catch blocks to prevent one failing listener from affecting others.
 
 ```typescript
-eventBus.on(EVENTS.BLOCK_FINALIZED, (block, height, hash, txIds) => {
+import type { Block } from 'streembit-bc-types';
+
+eventBus.on(EVENTS.BLOCK_FINALIZED, (block: Block, index: number, hash: string, txIds: string[]) => {
   try {
     processBlock(block);
   } catch (error) {
     console.error('Error processing block:', error);
-    eventBus.emit(EVENTS.SYSTEM_ERROR, 'block-processor', error, false);
+    eventBus.emit(EVENTS.SYSTEM_ERROR, 'block-processor', error as Error, false);
   }
 });
 ```
@@ -494,12 +575,12 @@ Emit events at the appropriate granularity. More specific events make it easier 
 
 ```typescript
 //  Good - Specific events for different purposes
-eventBus.emit(EVENTS.DEPOSIT_LOCKED, address, amount, blockHeight);
-eventBus.emit(EVENTS.DEPOSIT_RELEASED, address, amount, blockHeight);
-eventBus.emit(EVENTS.DEPOSIT_SLASHED, address, amount, reason, blockHeight);
+eventBus.emit(EVENTS.DEPOSIT_LOCKED, 'addr123', '1000', 100);
+eventBus.emit(EVENTS.DEPOSIT_RELEASED, 'addr123', '1000', 101);
+eventBus.emit(EVENTS.DEPOSIT_SLASHED, 'addr456', '500', 'double-sign', 102);
 
 //  Bad - Generic event requiring consumers to filter
-eventBus.emit('deposit:event', { type: 'locked', address, amount, blockHeight });
+eventBus.emit('deposit:event', { type: 'locked', address: 'addr123', amount: '1000', blockHeight: 100 });
 ```
 
 #### 5. Always Use Request IDs for Request/Response
@@ -582,10 +663,12 @@ This package is written in TypeScript and provides full type definitions. When y
 4. Catch type errors at compile time
 
 ```typescript
+import type { Block } from 'streembit-bc-types';
+
 // TypeScript knows the exact signature
-eventBus.on(EVENTS.BLOCK_FINALIZED, (block, height, hash, txIds) => {
-  // block: object
-  // height: number
+eventBus.on(EVENTS.BLOCK_FINALIZED, (block, index, hash, txIds) => {
+  // block: Block
+  // index: number
   // hash: string
   // txIds: string[]
 });

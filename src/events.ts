@@ -602,7 +602,7 @@ export interface Events {
     /**
      * Storage get request
      * Source: Smart contracts
-     * Consumers: EventBus (handles internally)
+     * Consumers: Consensus layer
      * Purpose: Get value from storage
      */
     [EVENTS.CONTRACT_STORAGE_GET]: (request: ContractStorageGetPayload) => void;
@@ -610,7 +610,7 @@ export interface Events {
     /**
      * Crypto verify request
      * Source: Smart contracts
-     * Consumers: EventBus (handles internally)
+     * Consumers: Consensus layer
      * Purpose: Verify signature
      */
     [EVENTS.CONTRACT_CRYPTO_VERIFY]: (request: ContractCryptoVerifyPayload) => void;
@@ -618,7 +618,7 @@ export interface Events {
     /**
      * Crypto hash request
      * Source: Smart contracts
-     * Consumers: EventBus (handles internally)
+     * Consumers: Consensus layer
      * Purpose: Hash data using blake2b256
      */
     [EVENTS.CONTRACT_CRYPTO_HASH]: (request: ContractCryptoHashPayload) => void;
@@ -626,7 +626,7 @@ export interface Events {
     /**
      * Account get balance request
      * Source: Smart contracts
-     * Consumers: EventBus (handles internally)
+     * Consumers: Consensus layer
      * Purpose: Get account balance
      */
     [EVENTS.CONTRACT_ACCOUNT_GETBALANCE]: (request: ContractAccountGetBalancePayload) => void;
@@ -634,7 +634,7 @@ export interface Events {
     /**
      * Math decimal request
      * Source: Smart contracts
-     * Consumers: EventBus (handles internally)
+     * Consumers: Consensus layer
      * Purpose: Create decimal value
      */
     [EVENTS.CONTRACT_MATH_DECIMAL]: (request: ContractMathDecimalPayload) => void;
@@ -642,7 +642,7 @@ export interface Events {
     /**
      * Math add request
      * Source: Smart contracts
-     * Consumers: EventBus (handles internally)
+     * Consumers: Consensus layer
      * Purpose: Add two decimal values
      */
     [EVENTS.CONTRACT_MATH_ADD]: (request: ContractMathBinaryPayload) => void;
@@ -650,7 +650,7 @@ export interface Events {
     /**
      * Math subtract request
      * Source: Smart contracts
-     * Consumers: EventBus (handles internally)
+     * Consumers: Consensus layer
      * Purpose: Subtract two decimal values
      */
     [EVENTS.CONTRACT_MATH_SUBTRACT]: (request: ContractMathBinaryPayload) => void;
@@ -658,7 +658,7 @@ export interface Events {
     /**
      * Math compare request
      * Source: Smart contracts
-     * Consumers: EventBus (handles internally)
+     * Consumers: Consensus layer
      * Purpose: Compare two decimal values
      */
     [EVENTS.CONTRACT_MATH_COMPARE]: (request: ContractMathBinaryPayload) => void;
@@ -666,7 +666,7 @@ export interface Events {
     /**
      * Encoding toJSON request
      * Source: Smart contracts
-     * Consumers: EventBus (handles internally)
+     * Consumers: Consensus layer
      * Purpose: Encode data to deterministic JSON
      */
     [EVENTS.CONTRACT_ENCODING_TOJSON]: (request: ContractEncodingToJsonPayload) => void;
@@ -674,7 +674,7 @@ export interface Events {
     /**
      * Transaction validate signatures request
      * Source: Smart contracts
-     * Consumers: EventBus (handles internally)
+     * Consumers: Consensus layer
      * Purpose: Validate transaction signatures using consensus layer logic
      */
     [EVENTS.CONTRACT_TRANSACTION_VALIDATESIGNATURES]: (request: ContractTXValidateSigPayload) => void;
@@ -687,7 +687,7 @@ export interface Events {
 
     /**
      * Storage get response
-     * Source: EventBus (consensus layer)
+     * Source: Consensus layer
      * Consumers: Smart contracts
      * Purpose: Return value from storage
      */
@@ -695,7 +695,7 @@ export interface Events {
 
     /**
      * Crypto verify response
-     * Source: EventBus (consensus layer)
+     * Source: Consensus layer
      * Consumers: Smart contracts
      * Purpose: Return signature verification result
      */
@@ -703,7 +703,7 @@ export interface Events {
 
     /**
      * Crypto hash response
-     * Source: EventBus (consensus layer)
+     * Source: Consensus layer
      * Consumers: Smart contracts
      * Purpose: Return hash result
      */
@@ -711,7 +711,7 @@ export interface Events {
 
     /**
      * Account get balance response
-     * Source: EventBus (consensus layer)
+     * Source: Consensus layer
      * Consumers: Smart contracts
      * Purpose: Return account balance
      */
@@ -719,7 +719,7 @@ export interface Events {
 
     /**
      * Math decimal response
-     * Source: EventBus (consensus layer)
+     * Source: Consensus layer
      * Consumers: Smart contracts
      * Purpose: Return decimal value
      */
@@ -727,7 +727,7 @@ export interface Events {
 
     /**
      * Math add response
-     * Source: EventBus (consensus layer)
+     * Source: Consensus layer
      * Consumers: Smart contracts
      * Purpose: Return addition result
      */
@@ -735,7 +735,7 @@ export interface Events {
 
     /**
      * Math subtract response
-     * Source: EventBus (consensus layer)
+     * Source: Consensus layer
      * Consumers: Smart contracts
      * Purpose: Return subtraction result
      */
@@ -743,7 +743,7 @@ export interface Events {
 
     /**
      * Math compare response
-     * Source: EventBus (consensus layer)
+     * Source: Consensus layer
      * Consumers: Smart contracts
      * Purpose: Return comparison result (-1, 0, or 1)
      */
@@ -751,7 +751,7 @@ export interface Events {
 
     /**
      * Encoding toJSON response
-     * Source: EventBus (consensus layer)
+     * Source: Consensus layer
      * Consumers: Smart contracts
      * Purpose: Return deterministic JSON string
      */
@@ -759,7 +759,7 @@ export interface Events {
 
     /**
      * Transaction validate signatures response
-     * Source: EventBus (consensus layer)
+     * Source: Consensus layer
      * Consumers: Smart contracts
      * Purpose: Return signature validation result
      */
