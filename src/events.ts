@@ -1,4 +1,29 @@
 
+import type { Block, Transaction, NodeIdentity } from 'streembit-bc-types';
+
+
+// Event payload types - single source of truth
+export type SubmitTransactionPayload = {
+    requestId: string;
+    txJson: string;
+};
+
+export type PeerBlockInboundPayload = {
+    blockPayload: unknown;
+    advertisedBlockCount: number;
+    peerId: string;
+    timestamp: number;
+};
+
+// Contract service payload types
+export type ContractStorageGetPayload = { requestId: string; key: string };
+export type ContractCryptoVerifyPayload = { requestId: string; data: string; signature: string; publicKey: string };
+export type ContractCryptoHashPayload = { requestId: string; data: string | Buffer };
+export type ContractAccountGetBalancePayload = { requestId: string; address: string; asset: string };
+export type ContractMathDecimalPayload = { requestId: string; value: string };
+export type ContractMathBinaryPayload = { requestId: string; a: string; b: string };
+export type ContractEncodingToJsonPayload = { requestId: string; data: any };
+export type ContractTXValidateSigPayload = { requestId: string; transaction: Transaction };
 
 // Export event names as constants for easy reference
 export const EVENTS = {
@@ -37,6 +62,7 @@ export const EVENTS = {
     NETWORK_BLOCK_RECEIVED: 'network:block-received',
     BLOCK_PROPAGATE: 'block:propagate',
     PEER_BLOCK: 'peer:block',
+    PEER_BLOCK_INBOUND: 'peer:block-inbound',
     BLOCK_REORG: 'block:reorg',
 
     // Deposits
@@ -102,7 +128,7 @@ export interface Events {
     * Note: CLI should NOT serialize - it sends raw JSON string
     * Note: requestId is required to match response with request in concurrent scenarios
     */
-     [EVENTS.CLI_SUBMIT_VALIDATION_REQUEST]: (request: {
+    [EVENTS.CLI_SUBMIT_VALIDATION_REQUEST]: (request: {
         requestId: string;
         txJson: string;
     }) => void;
@@ -130,10 +156,7 @@ export interface Events {
      * Note: CLI should NOT serialize - it sends raw JSON string
      * Note: requestId is required to match response with request in concurrent scenarios
      */
-    [EVENTS.CLI_SUBMIT_TRANSACTION]: (request: {
-        requestId: string;
-        txJson: string;
-    }) => void;
+    [EVENTS.CLI_SUBMIT_TRANSACTION]: (request: SubmitTransactionPayload) => void;
 
     /**
      * Response to CLI transaction submission
@@ -155,7 +178,7 @@ export interface Events {
      * Consumers: Engine (via OnMempoolTransaction)
      * Purpose: Notify engine that transaction is available
      */
-    [EVENTS.MEMPOOL_TRANSACTION]: (tx: object) => void;
+    [EVENTS.MEMPOOL_TRANSACTION]: (tx: Transaction) => void;
 
     /**
      * Command to return transaction to mempool (e.g., on failure)
@@ -163,7 +186,7 @@ export interface Events {
      * Consumers: Mempool
      * Purpose: Return failed/unprocessed transaction to pool
      */
-    [EVENTS.MEMPOOL_RETURN]: (tx: object) => void;
+    [EVENTS.MEMPOOL_RETURN]: (tx: Transaction) => void;
 
     /**
      * Emitted when transaction validation fails
@@ -171,7 +194,7 @@ export interface Events {
      * Consumers: CLI, RPC (for error reporting)
      * Purpose: Notify submission failure with reasons
      */
-    [EVENTS.TX_REJECTED]: (tx: object, errors: string[]) => void;
+    [EVENTS.TX_REJECTED]: (tx: Transaction, errors: string[]) => void;
 
     /**
      * Emitted when transactions are removed from pool (included in block)
@@ -182,9 +205,9 @@ export interface Events {
     [EVENTS.TX_REMOVED]: (txIds: string[], reason: 'included' | 'expired' | 'replaced') => void;
 
 
-// ============================================================================
-// Attestation Events (Core to PoC Consensus)
-// ============================================================================
+    // ============================================================================
+    // Attestation Events (Core to PoC Consensus)
+    // ============================================================================
 
     /**
      * Emitted when validator sends attestation to block creator
@@ -195,7 +218,7 @@ export interface Events {
      */
     [EVENTS.VALIDATOR_ATTESTATION]: (response: {
         requestId: string;
-        transaction: object;
+        transaction: Transaction;
         validatorId: string;
         signature: string;
         timestamp: number;
@@ -222,14 +245,14 @@ export interface Events {
      */
     [EVENTS.ATTESTATION_REQUEST]: (request: {
         requestId: string;
-        tx: object;
+        tx: Transaction;
         creatorId: string;
     }) => void;
 
 
-// ============================================================================
-// Registry Events (Node Management)
-// ============================================================================
+    // ============================================================================
+    // Registry Events (Node Management)
+    // ============================================================================
 
 
     /**
@@ -238,7 +261,7 @@ export interface Events {
      * Consumers: Engine (updates accountableNodes)
      * Purpose: Track changes in block creators
      */
-    [EVENTS.REGISTRY_NODES_UPDATED]: (nodes: object[]) => void;
+    [EVENTS.REGISTRY_NODES_UPDATED]: (nodes: NodeIdentity[]) => void;
 
     /**
      * Emitted when validator set changes
@@ -246,12 +269,12 @@ export interface Events {
      * Consumers: Engine, Validators
      * Purpose: Track changes in validator set
      */
-    [EVENTS.REGISTRY_VALIDATORS_UPDATED]: (validators: object[]) => void;
+    [EVENTS.REGISTRY_VALIDATORS_UPDATED]: (validators: NodeIdentity[]) => void;
 
 
-// ============================================================================
-// Consensus Engine Events
-// ============================================================================
+    // ============================================================================
+    // Consensus Engine Events
+    // ============================================================================
 
 
     /**
@@ -285,9 +308,9 @@ export interface Events {
     [EVENTS.SCHEDULE_CHANGE]: () => void;
 
 
-// ============================================================================
-// Shadow Production Events
-// ============================================================================
+    // ============================================================================
+    // Shadow Production Events
+    // ============================================================================
 
 
     /**
@@ -297,8 +320,8 @@ export interface Events {
      * Purpose: Trigger shadow block preparation
      */
     [EVENTS.SHADOW_PREPARE]: (data: {
-        transaction: object;  // For instant mode
-        transactions?: object[];  // For epoch mode
+        transaction: Transaction;  // For instant mode
+        transactions?: Transaction[];  // For epoch mode
         primaryNode: string;
         expectedBlockTime: number;
     }) => void;
@@ -312,7 +335,7 @@ export interface Events {
     [EVENTS.SHADOW_TAKEOVER]: (
         primaryNode: string,
         shadowNode: string,
-        blockHeight: number
+        blockIndex: number
     ) => void;
 
 
@@ -328,8 +351,8 @@ export interface Events {
      * Purpose: Notify that block is confirmed and should be stored/applied
      */
     [EVENTS.BLOCK_FINALIZED]: (
-        block: object,
-        height: number,
+        block: Block,
+        index: number,
         hash: string,
         txIds: string[]
     ) => void;
@@ -340,7 +363,7 @@ export interface Events {
      * Consumers: Engine (OnNetworkBlock)
      * Purpose: Process block received from peer
      */
-    [EVENTS.NETWORK_BLOCK_RECEIVED]: (block: object) => void;
+    [EVENTS.NETWORK_BLOCK_RECEIVED]: (block: Block) => void;
 
     /**
      * Command to propagate block to network
@@ -348,7 +371,7 @@ export interface Events {
      * Consumers: Network
      * Purpose: Broadcast new block to peers
      */
-    [EVENTS.BLOCK_PROPAGATE]: (block: object) => void;
+    [EVENTS.BLOCK_PROPAGATE]: (block: Block) => void;
 
     /**
      * Emitted when peer sends us a block
@@ -356,7 +379,15 @@ export interface Events {
      * Consumers: Engine (OnPeerBlock)
      * Purpose: Handle blocks from specific peers
      */
-    [EVENTS.PEER_BLOCK]: (block: object) => void;
+    [EVENTS.PEER_BLOCK]: (block: Block) => void;
+
+    /**
+     * Emitted when block is received via REST API from peer
+     * Source: REST API /block/publish route
+     * Consumers: Engine
+     * Purpose: Queue inbound block for async validation and processing
+     */
+    [EVENTS.PEER_BLOCK_INBOUND]: (payload: PeerBlockInboundPayload) => void;
 
     /**
      * Emitted when blockchain reorganization occurs
@@ -365,9 +396,9 @@ export interface Events {
      * Purpose: Rollback and reapply transactions
      */
     [EVENTS.BLOCK_REORG]: (
-        oldTip: { height: number; hash: string },
-        newTip: { height: number; hash: string },
-        commonAncestor: { height: number; hash: string }
+        oldTip: { index: number; hash: string },
+        newTip: { index: number; hash: string },
+        commonAncestor: { index: number; hash: string }
     ) => void;
 
 
@@ -385,7 +416,7 @@ export interface Events {
     [EVENTS.DEPOSIT_LOCKED]: (
         creatorAddress: string,
         amount: string,
-        blockHeight: number
+        blockIndex: number
     ) => void;
 
     /**
@@ -397,7 +428,7 @@ export interface Events {
     [EVENTS.DEPOSIT_RELEASED]: (
         creatorAddress: string,
         amount: string,
-        blockHeight: number
+        blockIndex: number
     ) => void;
 
     /**
@@ -410,7 +441,7 @@ export interface Events {
         creatorAddress: string,
         amount: string,
         reason: string,
-        blockHeight: number
+        blockIndex: number
     ) => void;
 
 
@@ -442,7 +473,7 @@ export interface Events {
     [EVENTS.STATE_ROOT_UPDATED]: (
         oldRoot: string,
         newRoot: string,
-        blockHeight: number
+        blockIndex: number
     ) => void;
 
 
@@ -457,7 +488,7 @@ export interface Events {
      * Consumers: Network
      * Purpose: Propagate transaction across network
      */
-    [EVENTS.NETWORK_BROADCAST_TX]: (tx: object) => void;
+    [EVENTS.NETWORK_BROADCAST_TX]: (tx: Transaction) => void;
 
     /**
      * Request to broadcast block to peers
@@ -465,7 +496,7 @@ export interface Events {
      * Consumers: Network
      * Purpose: Propagate finalized block
      */
-    [EVENTS.NETWORK_BROADCAST_BLOCK]: (block: object) => void;
+    [EVENTS.NETWORK_BROADCAST_BLOCK]: (block: Block) => void;
 
     /**
      * Emitted when peer connects
@@ -498,8 +529,8 @@ export interface Events {
      */
     [EVENTS.NETWORK_SYNC_STARTED]: (request: {
         requestId: string;
-        fromHeight: number;
-        toHeight: number;
+        fromIndex: number;
+        toIndex: number;
         peerId: string;
     }) => void;
 
@@ -513,13 +544,13 @@ export interface Events {
     [EVENTS.NETWORK_SYNC_COMPLETED]: (response: {
         requestId: string;
         success: boolean;
-        finalHeight: number;
+        finalIndex: number;
     }) => void;
 
 
-// ============================================================================
-// System Events
-// ============================================================================
+    // ============================================================================
+    // System Events
+    // ============================================================================
 
 
     /**
@@ -574,7 +605,7 @@ export interface Events {
      * Consumers: EventBus (handles internally)
      * Purpose: Get value from storage
      */
-    [EVENTS.CONTRACT_STORAGE_GET]: (request: { requestId: string; key: string }) => void;
+    [EVENTS.CONTRACT_STORAGE_GET]: (request: ContractStorageGetPayload) => void;
 
     /**
      * Crypto verify request
@@ -582,7 +613,7 @@ export interface Events {
      * Consumers: EventBus (handles internally)
      * Purpose: Verify signature
      */
-    [EVENTS.CONTRACT_CRYPTO_VERIFY]: (request: { requestId: string; data: string; signature: string; publicKey: string }) => void;
+    [EVENTS.CONTRACT_CRYPTO_VERIFY]: (request: ContractCryptoVerifyPayload) => void;
 
     /**
      * Crypto hash request
@@ -590,7 +621,7 @@ export interface Events {
      * Consumers: EventBus (handles internally)
      * Purpose: Hash data using blake2b256
      */
-    [EVENTS.CONTRACT_CRYPTO_HASH]: (request: { requestId: string; data: string | Buffer }) => void;
+    [EVENTS.CONTRACT_CRYPTO_HASH]: (request: ContractCryptoHashPayload) => void;
 
     /**
      * Account get balance request
@@ -598,7 +629,7 @@ export interface Events {
      * Consumers: EventBus (handles internally)
      * Purpose: Get account balance
      */
-    [EVENTS.CONTRACT_ACCOUNT_GETBALANCE]: (request: { requestId: string; address: string; asset: string }) => void;
+    [EVENTS.CONTRACT_ACCOUNT_GETBALANCE]: (request: ContractAccountGetBalancePayload) => void;
 
     /**
      * Math decimal request
@@ -606,7 +637,7 @@ export interface Events {
      * Consumers: EventBus (handles internally)
      * Purpose: Create decimal value
      */
-    [EVENTS.CONTRACT_MATH_DECIMAL]: (request: { requestId: string; value: string }) => void;
+    [EVENTS.CONTRACT_MATH_DECIMAL]: (request: ContractMathDecimalPayload) => void;
 
     /**
      * Math add request
@@ -614,7 +645,7 @@ export interface Events {
      * Consumers: EventBus (handles internally)
      * Purpose: Add two decimal values
      */
-    [EVENTS.CONTRACT_MATH_ADD]: (request: { requestId: string; a: string; b: string }) => void;
+    [EVENTS.CONTRACT_MATH_ADD]: (request: ContractMathBinaryPayload) => void;
 
     /**
      * Math subtract request
@@ -622,7 +653,7 @@ export interface Events {
      * Consumers: EventBus (handles internally)
      * Purpose: Subtract two decimal values
      */
-    [EVENTS.CONTRACT_MATH_SUBTRACT]: (request: { requestId: string; a: string; b: string }) => void;
+    [EVENTS.CONTRACT_MATH_SUBTRACT]: (request: ContractMathBinaryPayload) => void;
 
     /**
      * Math compare request
@@ -630,7 +661,7 @@ export interface Events {
      * Consumers: EventBus (handles internally)
      * Purpose: Compare two decimal values
      */
-    [EVENTS.CONTRACT_MATH_COMPARE]: (request: { requestId: string; a: string; b: string }) => void;
+    [EVENTS.CONTRACT_MATH_COMPARE]: (request: ContractMathBinaryPayload) => void;
 
     /**
      * Encoding toJSON request
@@ -638,15 +669,15 @@ export interface Events {
      * Consumers: EventBus (handles internally)
      * Purpose: Encode data to deterministic JSON
      */
-    [EVENTS.CONTRACT_ENCODING_TOJSON]: (request: { requestId: string; data: any }) => void;
+    [EVENTS.CONTRACT_ENCODING_TOJSON]: (request: ContractEncodingToJsonPayload) => void;
 
     /**
-     * object validate signatures request
+     * Transaction validate signatures request
      * Source: Smart contracts
      * Consumers: EventBus (handles internally)
      * Purpose: Validate transaction signatures using consensus layer logic
      */
-    [EVENTS.CONTRACT_TRANSACTION_VALIDATESIGNATURES]: (request: { requestId: string; transaction: any }) => void;
+    [EVENTS.CONTRACT_TRANSACTION_VALIDATESIGNATURES]: (request: ContractTXValidateSigPayload) => void;
 
 
     // ============================================================================
@@ -745,4 +776,5 @@ type BlockchainEvents = Events;
 
 // Export event types for modules to use
 export type { BlockchainEvents };
+
 

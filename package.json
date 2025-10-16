@@ -1,5 +1,5 @@
 {
-  "name": "streembit-sc-events",
+  "name": "streembit-bc-events",
   "version": "1.0.0",
   "description": "Streembit Blockchain Events",
   "license": "SEE LICENSE IN LICENSE",
@@ -8,11 +8,26 @@
     "url": "git+https://github.com/streembit/streembit-bc-events.git"
   },
   "author": "Zovolt Ltd, UK <tzpardi@streembit.com>",
-  "types": "./index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "clean": "rimraf dist",
+    "prebuild": "npm run clean",
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "test": "node --import=tsx --test tests/**/*.test.ts",
+    "test:watch": "node --import=tsx --test --watch tests/**/*.test.ts",
+    "test:coverage": "node --import=tsx --test --experimental-test-coverage tests/**/*.test.ts",
+    "type-check": "tsc --noEmit"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js"
+    }
   },
   "bugs": {
     "url": "https://github.com/streembit/streembit-bc-events/issues"
@@ -25,10 +40,14 @@
     "streembit blockchain"
   ],
   "devDependencies": {
-    "@types/jest": "^30.0.0",
     "@types/node": "^24.6.1",
-    "jest": "^30.2.0",
-    "ts-jest": "^29.4.4",
+    "rimraf": "^6.0.1",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "tsx": "^4.20.6",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "streembit-bc-types": "github:streembit/streembit-bc-types"
   }
 }

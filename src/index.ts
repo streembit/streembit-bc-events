@@ -1,7 +1,7 @@
 ﻿
 'use strict';
 
-import { BlockchainEvents } from './src/events';
+import { BlockchainEvents } from './events';
 import { EventEmitter } from 'events';
 
 const singleton = Symbol('singleton');
@@ -57,18 +57,27 @@ class EventHandler extends EventEmitter {
         }
         return this[singleton];
     }
-
-
-
-    
 }
 
 // Export the singleton instance
 export default EventHandler.instance;
 
 // Also export types for consumers
-export { EVENTS } from './src/events';
-export type { BlockchainEvents } from './src/events';
+export { EVENTS } from './events';
+export type {
+    BlockchainEvents,
+    SubmitTransactionPayload,
+    PeerBlockInboundPayload,
+    ContractStorageGetPayload,
+    ContractCryptoVerifyPayload,
+    ContractCryptoHashPayload,
+    ContractAccountGetBalancePayload,
+    ContractMathDecimalPayload,
+    ContractMathBinaryPayload,
+    ContractEncodingToJsonPayload,
+    ContractTXValidateSigPayload
+} from './events';
+
 
 
 
