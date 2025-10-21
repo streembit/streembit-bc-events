@@ -75,7 +75,10 @@ export type {
     ContractMathDecimalPayload,
     ContractMathBinaryPayload,
     ContractEncodingToJsonPayload,
-    ContractTXValidateSigPayload
+    ContractTXValidateSigPayload,
+    ContractConfigGetGenesisKeysPayload,
+    GenesisPublicKeyInfo,
+    ContractConfigGetGenesisPublicKeysResponse
 } from './events';
 
 

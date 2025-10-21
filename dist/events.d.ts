@@ -45,6 +45,19 @@ export type ContractTXValidateSigPayload = {
     requestId: string;
     transaction: Transaction;
 };
+export type ContractConfigGetGenesisKeysPayload = {
+    requestId: string;
+};
+export type GenesisPublicKeyInfo = {
+    genesisId: string;
+    publicKey: string;
+};
+export type ContractConfigGetGenesisPublicKeysResponse = {
+    requestId: string;
+    success: boolean;
+    data?: GenesisPublicKeyInfo[];
+    error?: string;
+};
 export declare const EVENTS: {
     readonly CLI_SUBMIT_TRANSACTION: "cli:submit-transaction";
     readonly CLI_TRANSACTION_RESPONSE: "cli:transaction-response";
@@ -95,6 +108,7 @@ export declare const EVENTS: {
     readonly CONTRACT_MATH_COMPARE: "contract:math.compare";
     readonly CONTRACT_ENCODING_TOJSON: "contract:encoding.toJSON";
     readonly CONTRACT_TRANSACTION_VALIDATESIGNATURES: "contract:transaction.validateSignatures";
+    readonly CONTRACT_CONFIG_GET_GENESISKEYS: "contract:config.getGenesisKeys";
     readonly CONTRACT_STORAGE_RESPONSE: "contract:storage.response";
     readonly CONTRACT_CRYPTO_VERIFY_RESPONSE: "contract:crypto.verify.response";
     readonly CONTRACT_CRYPTO_HASH_RESPONSE: "contract:crypto.hash.response";
@@ -105,6 +119,7 @@ export declare const EVENTS: {
     readonly CONTRACT_MATH_COMPARE_RESPONSE: "contract:math.compare.response";
     readonly CONTRACT_ENCODING_TOJSON_RESPONSE: "contract:encoding.toJSON.response";
     readonly CONTRACT_TRANSACTION_VALIDATESIGNATURES_RESPONSE: "contract:transaction.validateSignatures.response";
+    readonly CONTRACT_CONFIG_GET_GENESISKEYS_RESPONSE: "contract:config.getGenesisKeys.response";
 };
 export interface Events {
     /**
@@ -612,6 +627,19 @@ export interface Events {
         isValid: boolean;
         errors?: string[];
     }) => void;
+    /**
+     * Config get genesis keys request
+     * Source: Smart contracts
+     * Consumers: Consensus layer
+     * Purpose: Get genesis public keys for validation
+     */
+    [EVENTS.CONTRACT_CONFIG_GET_GENESISKEYS]: (request: ContractConfigGetGenesisKeysPayload) => void;
+    /**
+     *
+     * Config get genesis keys response
+     *
+     */
+    [EVENTS.CONTRACT_CONFIG_GET_GENESISKEYS_RESPONSE]: (response: ContractConfigGetGenesisPublicKeysResponse) => void;
 }
 type BlockchainEvents = Events;
 export type { BlockchainEvents };

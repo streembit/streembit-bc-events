@@ -64,6 +64,7 @@ exports.EVENTS = {
     CONTRACT_MATH_COMPARE: 'contract:math.compare',
     CONTRACT_ENCODING_TOJSON: 'contract:encoding.toJSON',
     CONTRACT_TRANSACTION_VALIDATESIGNATURES: 'contract:transaction.validateSignatures',
+    CONTRACT_CONFIG_GET_GENESISKEYS: 'contract:config.getGenesisKeys',
     // Contract Service Events - Responses
     CONTRACT_STORAGE_RESPONSE: 'contract:storage.response',
     CONTRACT_CRYPTO_VERIFY_RESPONSE: 'contract:crypto.verify.response',
@@ -74,5 +75,6 @@ exports.EVENTS = {
     CONTRACT_MATH_SUBTRACT_RESPONSE: 'contract:math.subtract.response',
     CONTRACT_MATH_COMPARE_RESPONSE: 'contract:math.compare.response',
     CONTRACT_ENCODING_TOJSON_RESPONSE: 'contract:encoding.toJSON.response',
-    CONTRACT_TRANSACTION_VALIDATESIGNATURES_RESPONSE: 'contract:transaction.validateSignatures.response'
+    CONTRACT_TRANSACTION_VALIDATESIGNATURES_RESPONSE: 'contract:transaction.validateSignatures.response',
+    CONTRACT_CONFIG_GET_GENESISKEYS_RESPONSE: 'contract:config.getGenesisKeys.response',
 };

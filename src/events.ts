@@ -24,6 +24,18 @@ export type ContractMathDecimalPayload = { requestId: string; value: string };
 export type ContractMathBinaryPayload = { requestId: string; a: string; b: string };
 export type ContractEncodingToJsonPayload = { requestId: string; data: any };
 export type ContractTXValidateSigPayload = { requestId: string; transaction: Transaction };
+export type ContractConfigGetGenesisKeysPayload = { requestId: string; };
+export type GenesisPublicKeyInfo = {
+    genesisId: string;
+    publicKey: string;
+};
+
+export type ContractConfigGetGenesisPublicKeysResponse = {
+    requestId: string;
+    success: boolean;
+    data?: GenesisPublicKeyInfo[];
+    error?: string;
+};
 
 // Export event names as constants for easy reference
 export const EVENTS = {
@@ -99,6 +111,7 @@ export const EVENTS = {
     CONTRACT_MATH_COMPARE: 'contract:math.compare',
     CONTRACT_ENCODING_TOJSON: 'contract:encoding.toJSON',
     CONTRACT_TRANSACTION_VALIDATESIGNATURES: 'contract:transaction.validateSignatures',
+    CONTRACT_CONFIG_GET_GENESISKEYS: 'contract:config.getGenesisKeys',
 
     // Contract Service Events - Responses
     CONTRACT_STORAGE_RESPONSE: 'contract:storage.response',
@@ -110,7 +123,8 @@ export const EVENTS = {
     CONTRACT_MATH_SUBTRACT_RESPONSE: 'contract:math.subtract.response',
     CONTRACT_MATH_COMPARE_RESPONSE: 'contract:math.compare.response',
     CONTRACT_ENCODING_TOJSON_RESPONSE: 'contract:encoding.toJSON.response',
-    CONTRACT_TRANSACTION_VALIDATESIGNATURES_RESPONSE: 'contract:transaction.validateSignatures.response'
+    CONTRACT_TRANSACTION_VALIDATESIGNATURES_RESPONSE: 'contract:transaction.validateSignatures.response',
+    CONTRACT_CONFIG_GET_GENESISKEYS_RESPONSE: 'contract:config.getGenesisKeys.response',
 } as const;
 
 
@@ -680,6 +694,8 @@ export interface Events {
     [EVENTS.CONTRACT_TRANSACTION_VALIDATESIGNATURES]: (request: ContractTXValidateSigPayload) => void;
 
 
+
+
     // ============================================================================
     // Contract Service Response Events
     // ============================================================================
@@ -764,6 +780,23 @@ export interface Events {
      * Purpose: Return signature validation result
      */
     [EVENTS.CONTRACT_TRANSACTION_VALIDATESIGNATURES_RESPONSE]: (response: { requestId: string; isValid: boolean; errors?: string[] }) => void;
+
+
+    /**
+     * Config get genesis keys request
+     * Source: Smart contracts
+     * Consumers: Consensus layer
+     * Purpose: Get genesis public keys for validation
+     */
+    [EVENTS.CONTRACT_CONFIG_GET_GENESISKEYS]: (request: ContractConfigGetGenesisKeysPayload) => void;
+
+    /**
+     * 
+     * Config get genesis keys response
+     * 
+     */
+    [EVENTS.CONTRACT_CONFIG_GET_GENESISKEYS_RESPONSE]: (response: ContractConfigGetGenesisPublicKeysResponse) => void;
+
 }
 
 // ============================================================================

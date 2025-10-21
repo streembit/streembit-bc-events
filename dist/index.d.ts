@@ -13,5 +13,5 @@ declare class EventHandler extends EventEmitter {
 declare const _default: EventHandler;
 export default _default;
 export { EVENTS } from './events';
-export type { BlockchainEvents, SubmitTransactionPayload, PeerBlockInboundPayload, ContractStorageGetPayload, ContractCryptoVerifyPayload, ContractCryptoHashPayload, ContractAccountGetBalancePayload, ContractMathDecimalPayload, ContractMathBinaryPayload, ContractEncodingToJsonPayload, ContractTXValidateSigPayload } from './events';
+export type { BlockchainEvents, SubmitTransactionPayload, PeerBlockInboundPayload, ContractStorageGetPayload, ContractCryptoVerifyPayload, ContractCryptoHashPayload, ContractAccountGetBalancePayload, ContractMathDecimalPayload, ContractMathBinaryPayload, ContractEncodingToJsonPayload, ContractTXValidateSigPayload, ContractConfigGetGenesisKeysPayload, GenesisPublicKeyInfo, ContractConfigGetGenesisPublicKeysResponse } from './events';
 //# sourceMappingURL=index.d.ts.map
