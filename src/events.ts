@@ -37,6 +37,17 @@ export type ContractConfigGetGenesisPublicKeysResponse = {
     error?: string;
 };
 
+export type ConsrtiumApprovalResult= {
+    consortiumId: string;
+    validatorId: string;
+    approved: boolean;
+    signature: {
+        publicKey: string;
+        signature: string;
+    }
+    rejectedReason?: string;
+};
+
 // Export event names as constants for easy reference
 export const EVENTS = {
     // CLI

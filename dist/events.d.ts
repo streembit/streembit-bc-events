@@ -58,6 +58,16 @@ export type ContractConfigGetGenesisPublicKeysResponse = {
     data?: GenesisPublicKeyInfo[];
     error?: string;
 };
+export type ConsrtiumApprovalResult = {
+    consortiumId: string;
+    validatorId: string;
+    approved: boolean;
+    signature: {
+        publicKey: string;
+        signature: string;
+    };
+    rejectedReason?: string;
+};
 export declare const EVENTS: {
     readonly CLI_SUBMIT_TRANSACTION: "cli:submit-transaction";
     readonly CLI_TRANSACTION_RESPONSE: "cli:transaction-response";
