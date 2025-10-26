@@ -81,6 +81,12 @@ export type {
     ContractConfigGetGenesisPublicKeysResponse
 } from './events';
 
+export type EventName = keyof BlockchainEvents; // "network:broadcast-tx" | "network:broadcast-block"
+
+export type EventPayloads = {
+    [K in keyof BlockchainEvents]: Parameters<BlockchainEvents[K]>[0];
+};
+
 
 
 
