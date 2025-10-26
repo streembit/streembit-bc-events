@@ -4,10 +4,10 @@ exports.EVENTS = void 0;
 // Export event names as constants for easy reference
 exports.EVENTS = {
     // CLI
-    CLI_SUBMIT_TRANSACTION: 'cli:submit-transaction',
-    CLI_TRANSACTION_RESPONSE: 'cli:transaction-response',
-    CLI_SUBMIT_VALIDATION_REQUEST: 'cli:submit-validation-request',
-    CLI_VALIDATION_RESPONSE: 'cli:validation-response',
+    TRANSACTION_SUBMIT: 'tx:submit-transaction',
+    TRANSACTION_RESPONSE: 'tx:transaction-response',
+    TRANSACTION_SUBMIT_VALIDATION_REQUEST: 'tx:submit-validation-request',
+    TRANSACTION_VALIDATION_RESPONSE: 'tx:validation-response',
     // Mempool
     MEMPOOL_TRANSACTION: 'mempool:transaction',
     MEMPOOL_RETURN: 'mempool:return',

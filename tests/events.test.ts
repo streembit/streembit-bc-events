@@ -9,10 +9,10 @@ describe('EVENTS Constants', () => {
     });
 
     it('should contain CLI event constants', () => {
-        assert.strictEqual(EVENTS.CLI_SUBMIT_TRANSACTION, 'cli:submit-transaction');
-        assert.strictEqual(EVENTS.CLI_TRANSACTION_RESPONSE, 'cli:transaction-response');
-        assert.strictEqual(EVENTS.CLI_SUBMIT_VALIDATION_REQUEST, 'cli:submit-validation-request');
-        assert.strictEqual(EVENTS.CLI_VALIDATION_RESPONSE, 'cli:validation-response');
+        assert.strictEqual(EVENTS.TRANSACTION_SUBMIT, 'tx:submit-transaction');
+        assert.strictEqual(EVENTS.TRANSACTION_RESPONSE, 'tx:transaction-response');
+        assert.strictEqual(EVENTS.TRANSACTION_SUBMIT_VALIDATION_REQUEST, 'tx:submit-validation-request');
+        assert.strictEqual(EVENTS.TRANSACTION_VALIDATION_RESPONSE, 'tx:validation-response');
     });
 
     it('should contain mempool event constants', () => {

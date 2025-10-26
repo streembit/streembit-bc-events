@@ -51,10 +51,10 @@ export type ConsrtiumApprovalResult= {
 // Export event names as constants for easy reference
 export const EVENTS = {
     // CLI
-    CLI_SUBMIT_TRANSACTION: 'cli:submit-transaction',
-    CLI_TRANSACTION_RESPONSE: 'cli:transaction-response',
-    CLI_SUBMIT_VALIDATION_REQUEST: 'cli:submit-validation-request',
-    CLI_VALIDATION_RESPONSE: 'cli:validation-response',
+    TRANSACTION_SUBMIT: 'tx:submit-transaction',
+    TRANSACTION_RESPONSE: 'tx:transaction-response',
+    TRANSACTION_SUBMIT_VALIDATION_REQUEST: 'tx:submit-validation-request',
+    TRANSACTION_VALIDATION_RESPONSE: 'tx:validation-response',
 
     // Mempool
     MEMPOOL_TRANSACTION: 'mempool:transaction',
@@ -153,7 +153,7 @@ export interface Events {
     * Note: CLI should NOT serialize - it sends raw JSON string
     * Note: requestId is required to match response with request in concurrent scenarios
     */
-    [EVENTS.CLI_SUBMIT_VALIDATION_REQUEST]: (request: {
+    [EVENTS.TRANSACTION_SUBMIT_VALIDATION_REQUEST]: (request: {
         requestId: string;
         txJson: string;
     }) => void;
@@ -166,7 +166,7 @@ export interface Events {
      * the validation result (success or validation errors)
      * Note: requestId matches the original request
      */
-    [EVENTS.CLI_VALIDATION_RESPONSE]: (response: {
+    [EVENTS.TRANSACTION_VALIDATION_RESPONSE]: (response: {
         requestId: string;
         success: boolean;
         errors?: string[];
@@ -181,7 +181,7 @@ export interface Events {
      * Note: CLI should NOT serialize - it sends raw JSON string
      * Note: requestId is required to match response with request in concurrent scenarios
      */
-    [EVENTS.CLI_SUBMIT_TRANSACTION]: (request: SubmitTransactionPayload) => void;
+    [EVENTS.TRANSACTION_SUBMIT]: (request: SubmitTransactionPayload) => void;
 
     /**
      * Response to CLI transaction submission
@@ -190,7 +190,7 @@ export interface Events {
      * Purpose: Notify CLI of submission result (success or validation errors)
      * Note: requestId matches the original request
      */
-    [EVENTS.CLI_TRANSACTION_RESPONSE]: (response: {
+    [EVENTS.TRANSACTION_RESPONSE]: (response: {
         requestId: string;
         success: boolean;
         txId?: string;

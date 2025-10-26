@@ -69,10 +69,10 @@ export type ConsrtiumApprovalResult = {
     rejectedReason?: string;
 };
 export declare const EVENTS: {
-    readonly CLI_SUBMIT_TRANSACTION: "cli:submit-transaction";
-    readonly CLI_TRANSACTION_RESPONSE: "cli:transaction-response";
-    readonly CLI_SUBMIT_VALIDATION_REQUEST: "cli:submit-validation-request";
-    readonly CLI_VALIDATION_RESPONSE: "cli:validation-response";
+    readonly TRANSACTION_SUBMIT: "tx:submit-transaction";
+    readonly TRANSACTION_RESPONSE: "tx:transaction-response";
+    readonly TRANSACTION_SUBMIT_VALIDATION_REQUEST: "tx:submit-validation-request";
+    readonly TRANSACTION_VALIDATION_RESPONSE: "tx:validation-response";
     readonly MEMPOOL_TRANSACTION: "mempool:transaction";
     readonly MEMPOOL_RETURN: "mempool:return";
     readonly TX_REJECTED: "tx:rejected";
@@ -140,7 +140,7 @@ export interface Events {
     * Note: CLI should NOT serialize - it sends raw JSON string
     * Note: requestId is required to match response with request in concurrent scenarios
     */
-    [EVENTS.CLI_SUBMIT_VALIDATION_REQUEST]: (request: {
+    [EVENTS.TRANSACTION_SUBMIT_VALIDATION_REQUEST]: (request: {
         requestId: string;
         txJson: string;
     }) => void;
@@ -152,7 +152,7 @@ export interface Events {
      * the validation result (success or validation errors)
      * Note: requestId matches the original request
      */
-    [EVENTS.CLI_VALIDATION_RESPONSE]: (response: {
+    [EVENTS.TRANSACTION_VALIDATION_RESPONSE]: (response: {
         requestId: string;
         success: boolean;
         errors?: string[];
@@ -166,7 +166,7 @@ export interface Events {
      * Note: CLI should NOT serialize - it sends raw JSON string
      * Note: requestId is required to match response with request in concurrent scenarios
      */
-    [EVENTS.CLI_SUBMIT_TRANSACTION]: (request: SubmitTransactionPayload) => void;
+    [EVENTS.TRANSACTION_SUBMIT]: (request: SubmitTransactionPayload) => void;
     /**
      * Response to CLI transaction submission
      * Source: TransactionPool
@@ -174,7 +174,7 @@ export interface Events {
      * Purpose: Notify CLI of submission result (success or validation errors)
      * Note: requestId matches the original request
      */
-    [EVENTS.CLI_TRANSACTION_RESPONSE]: (response: {
+    [EVENTS.TRANSACTION_RESPONSE]: (response: {
         requestId: string;
         success: boolean;
         txId?: string;
