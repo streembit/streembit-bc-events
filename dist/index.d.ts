@@ -46,6 +46,7 @@ export interface Requests {
     };
     [REQUESTS.GET_BLOCKS_FROM]: {
         req: {
+            requesterId: string;
             startIndex: number;
             count: number;
         };

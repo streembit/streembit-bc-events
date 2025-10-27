@@ -100,6 +100,7 @@ export interface Requests {
     [REQUESTS.SUBMIT_TX]: { req: { tx: Transaction }; res: { ok: true; id: string } | { ok: false; error: string } };
     [REQUESTS.GET_BLOCKS_FROM]: {
         req: {
+            requesterId: string; 
             startIndex: number;
             count: number;
         }; 
