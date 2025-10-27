@@ -50,7 +50,10 @@ export interface Requests {
             count: number;
         };
         res: {
-            blocks: Block[];
+            blocks: Array<{
+                block: Block;
+                blockCount: number;
+            }>;
             nextStartIndex: number | null;
         };
     };
