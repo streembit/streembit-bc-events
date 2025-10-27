@@ -61,4 +61,5 @@ export type RequestPayloads = {
 export type ReplyPayloads = {
     [K in keyof Requests]: Requests[K]["res"];
 };
+export { REQUESTS } from './events';
 //# sourceMappingURL=index.d.ts.map

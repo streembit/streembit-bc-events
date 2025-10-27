@@ -1,6 +1,6 @@
 'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EVENTS = void 0;
+exports.REQUESTS = exports.EVENTS = void 0;
 const events_1 = require("./events");
 const events_2 = require("events");
 const singleton = Symbol('singleton');
@@ -41,3 +41,5 @@ exports.default = EventHandler.instance;
 // Also export types for consumers
 var events_3 = require("./events");
 Object.defineProperty(exports, "EVENTS", { enumerable: true, get: function () { return events_3.EVENTS; } });
+var events_4 = require("./events");
+Object.defineProperty(exports, "REQUESTS", { enumerable: true, get: function () { return events_4.REQUESTS; } });

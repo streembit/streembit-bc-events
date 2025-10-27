@@ -107,4 +107,6 @@ export interface Requests {
 export type RequestPayloads = { [K in keyof Requests]: Requests[K]["req"] };
 export type ReplyPayloads = { [K in keyof Requests]: Requests[K]["res"] };
 
+export { REQUESTS } from './events';
+
 
