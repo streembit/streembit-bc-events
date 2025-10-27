@@ -131,6 +131,10 @@ export declare const EVENTS: {
     readonly CONTRACT_TRANSACTION_VALIDATESIGNATURES_RESPONSE: "contract:transaction.validateSignatures.response";
     readonly CONTRACT_CONFIG_GET_GENESISKEYS_RESPONSE: "contract:config.getGenesisKeys.response";
 };
+export declare const REQUESTS: {
+    readonly GET_BLOCK: "rpc:get-block";
+    readonly SUBMIT_TX: "rpc:submit-tx";
+};
 export interface Events {
     /**
     * Emitted when CLI submits a validation request as JSON string

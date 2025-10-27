@@ -1,8 +1,9 @@
 ﻿
 'use strict';
 
-import { BlockchainEvents } from './events';
+import { BlockchainEvents, REQUESTS } from './events';
 import { EventEmitter } from 'events';
+import type { Block, Transaction } from 'streembit-bc-types';
 
 const singleton = Symbol('singleton');
 const singletonEnforcer = Symbol('singletonEnforcer');
@@ -87,6 +88,19 @@ export type EventPayloads = {
     [K in keyof BlockchainEvents]: Parameters<BlockchainEvents[K]>[0];
 };
 
+export type RequestName = (typeof REQUESTS)[keyof typeof REQUESTS];
 
+/**
+ * Per-request typed request/response payloads:
+ *   Requests[K]["req"] -> request payload type
+ *   Requests[K]["res"] -> response payload type
+ */
+export interface Requests {
+    [REQUESTS.GET_BLOCK]: { req: { id: string }; res: Block | null };
+    [REQUESTS.SUBMIT_TX]: { req: { tx: Transaction }; res: { ok: true; id: string } | { ok: false; error: string } };
+}
+
+export type RequestPayloads = { [K in keyof Requests]: Requests[K]["req"] };
+export type ReplyPayloads = { [K in keyof Requests]: Requests[K]["res"] };
 
 

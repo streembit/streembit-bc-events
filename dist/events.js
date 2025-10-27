@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EVENTS = void 0;
+exports.REQUESTS = exports.EVENTS = void 0;
 // Export event names as constants for easy reference
 exports.EVENTS = {
     // CLI
@@ -77,4 +77,10 @@ exports.EVENTS = {
     CONTRACT_ENCODING_TOJSON_RESPONSE: 'contract:encoding.toJSON.response',
     CONTRACT_TRANSACTION_VALIDATESIGNATURES_RESPONSE: 'contract:transaction.validateSignatures.response',
     CONTRACT_CONFIG_GET_GENESISKEYS_RESPONSE: 'contract:config.getGenesisKeys.response',
+};
+// --- Request/Reply events (NEW) ---
+exports.REQUESTS = {
+    // examples; rename to your domain
+    GET_BLOCK: "rpc:get-block",
+    SUBMIT_TX: "rpc:submit-tx",
 };

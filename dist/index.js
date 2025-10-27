@@ -1,10 +1,11 @@
 'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EVENTS = void 0;
-const events_1 = require("events");
+const events_1 = require("./events");
+const events_2 = require("events");
 const singleton = Symbol('singleton');
 const singletonEnforcer = Symbol('singletonEnforcer');
-class EventHandler extends events_1.EventEmitter {
+class EventHandler extends events_2.EventEmitter {
     constructor(enforcer) {
         if (enforcer !== singletonEnforcer) {
             throw new Error("Cannot construct singleton");
@@ -38,5 +39,5 @@ class EventHandler extends events_1.EventEmitter {
 // Export the singleton instance
 exports.default = EventHandler.instance;
 // Also export types for consumers
-var events_2 = require("./events");
-Object.defineProperty(exports, "EVENTS", { enumerable: true, get: function () { return events_2.EVENTS; } });
+var events_3 = require("./events");
+Object.defineProperty(exports, "EVENTS", { enumerable: true, get: function () { return events_3.EVENTS; } });

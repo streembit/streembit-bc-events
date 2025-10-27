@@ -139,6 +139,13 @@ export const EVENTS = {
 } as const;
 
 
+// --- Request/Reply events (NEW) ---
+export const REQUESTS = {
+    // examples; rename to your domain
+    GET_BLOCK: "rpc:get-block",
+    SUBMIT_TX: "rpc:submit-tx",
+} as const;
+
 
 // ============================================================================
 // CLI Events
