@@ -98,6 +98,10 @@ export type RequestName = (typeof REQUESTS)[keyof typeof REQUESTS];
 export interface Requests {
     [REQUESTS.GET_BLOCK]: { req: { id: string }; res: Block | null };
     [REQUESTS.SUBMIT_TX]: { req: { tx: Transaction }; res: { ok: true; id: string } | { ok: false; error: string } };
+    [REQUESTS.GET_BLOCKS_FROM]: {
+        req: { startIndex: number; count: number }; // e.g. startIndex=1200, count=50
+        res: { blocks: Block[]; nextStartIndex: number | null }; // null if no more
+    };
 }
 
 export type RequestPayloads = { [K in keyof Requests]: Requests[K]["req"] };

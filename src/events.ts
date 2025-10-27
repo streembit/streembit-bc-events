@@ -139,17 +139,9 @@ export const EVENTS = {
 } as const;
 
 
-// --- Request/Reply events (NEW) ---
-export const REQUESTS = {
-    // examples; rename to your domain
-    GET_BLOCK: "rpc:get-block",
-    SUBMIT_TX: "rpc:submit-tx",
-} as const;
 
 
-// ============================================================================
-// CLI Events
-// ============================================================================
+// Events
 
 export interface Events {
     /**
@@ -817,9 +809,14 @@ export interface Events {
 
 }
 
-// ============================================================================
-// Type-safe Event Bus
-// ============================================================================
+
+// Request/Reply events 
+export const REQUESTS = {
+    // examples; rename to your domain
+    GET_BLOCK: "rpc:get-block",
+    SUBMIT_TX: "rpc:submit-tx",
+    GET_BLOCKS_FROM: "rpc:get-blocks-from",
+} as const;
 
 
 // Combine all event interfaces

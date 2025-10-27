@@ -78,9 +78,10 @@ exports.EVENTS = {
     CONTRACT_TRANSACTION_VALIDATESIGNATURES_RESPONSE: 'contract:transaction.validateSignatures.response',
     CONTRACT_CONFIG_GET_GENESISKEYS_RESPONSE: 'contract:config.getGenesisKeys.response',
 };
-// --- Request/Reply events (NEW) ---
+// Request/Reply events 
 exports.REQUESTS = {
     // examples; rename to your domain
     GET_BLOCK: "rpc:get-block",
     SUBMIT_TX: "rpc:submit-tx",
+    GET_BLOCKS_FROM: "rpc:get-blocks-from",
 };

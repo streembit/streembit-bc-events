@@ -44,6 +44,16 @@ export interface Requests {
             error: string;
         };
     };
+    [REQUESTS.GET_BLOCKS_FROM]: {
+        req: {
+            startIndex: number;
+            count: number;
+        };
+        res: {
+            blocks: Block[];
+            nextStartIndex: number | null;
+        };
+    };
 }
 export type RequestPayloads = {
     [K in keyof Requests]: Requests[K]["req"];
