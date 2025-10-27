@@ -398,7 +398,10 @@ export interface Events {
      * Consumers: Network
      * Purpose: Propagate finalized block
      */
-    [EVENTS.NETWORK_BROADCAST_BLOCK]: (block: Block) => void;
+    [EVENTS.NETWORK_BROADCAST_BLOCK]: (payload: {
+        block: Block;
+        blockCount: number;
+    }) => void;
     /**
      * Emitted when peer connects
      * Source: Network
