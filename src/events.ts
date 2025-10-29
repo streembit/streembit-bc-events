@@ -66,6 +66,7 @@ export const EVENTS = {
     VALIDATOR_ATTESTATION: 'validator:attestation',
     ATTESTATIONS_COMPLETE: 'attestations:complete',
     ATTESTATION_REQUEST: 'attestation:request',
+    VALIDATOR_HEARTBEAT: 'validator:heartbeat',
 
     // Registry
     REGISTRY_NODES_UPDATED: 'registry:nodes-updated',
@@ -272,6 +273,8 @@ export interface Events {
         tx: Transaction;
         creatorId: string;
     }) => void;
+
+    [EVENTS.VALIDATOR_HEARTBEAT]: (valiadtorId: string) => void;
 
 
     // ============================================================================
