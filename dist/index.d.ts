@@ -58,6 +58,19 @@ export interface Requests {
             nextStartIndex: number | null;
         };
     };
+    [REQUESTS.ATTEST_TX]: {
+        req: {
+            requestId: string;
+            tx: Transaction;
+            creatorId: string;
+            validatorId: string;
+        };
+        res: {
+            validatorId: string;
+            signature: string;
+            attestorPubKey: string;
+        };
+    };
 }
 export type RequestPayloads = {
     [K in keyof Requests]: Requests[K]["req"];
@@ -66,4 +79,5 @@ export type ReplyPayloads = {
     [K in keyof Requests]: Requests[K]["res"];
 };
 export { REQUESTS } from './events';
+export { SUBJECTS } from './events';
 //# sourceMappingURL=index.d.ts.map

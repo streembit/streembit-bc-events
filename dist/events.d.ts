@@ -658,6 +658,14 @@ export declare const REQUESTS: {
     readonly GET_BLOCK: "rpc:get-block";
     readonly SUBMIT_TX: "rpc:submit-tx";
     readonly GET_BLOCKS_FROM: "rpc:get-blocks-from";
+    readonly ATTEST_TX: "attestation:attest-tx";
+};
+export declare const SUBJECTS: {
+    /**
+     * Target specific validator for attestation request
+     * Uses request/reply pattern with point-to-point delivery
+     */
+    readonly attestationRequest: (validatorId: string) => string;
 };
 type BlockchainEvents = Events;
 export type { BlockchainEvents };

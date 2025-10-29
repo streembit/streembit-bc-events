@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.REQUESTS = exports.EVENTS = void 0;
+exports.SUBJECTS = exports.REQUESTS = exports.EVENTS = void 0;
 // Export event names as constants for easy reference
 exports.EVENTS = {
     // CLI
@@ -84,4 +84,12 @@ exports.REQUESTS = {
     GET_BLOCK: "rpc:get-block",
     SUBMIT_TX: "rpc:submit-tx",
     GET_BLOCKS_FROM: "rpc:get-blocks-from",
+    ATTEST_TX: "attestation:attest-tx"
+};
+exports.SUBJECTS = {
+    /**
+     * Target specific validator for attestation request
+     * Uses request/reply pattern with point-to-point delivery
+     */
+    attestationRequest: (validatorId) => `attestation.request.${validatorId}`
 };

@@ -816,7 +816,17 @@ export const REQUESTS = {
     GET_BLOCK: "rpc:get-block",
     SUBMIT_TX: "rpc:submit-tx",
     GET_BLOCKS_FROM: "rpc:get-blocks-from",
+    ATTEST_TX: "attestation:attest-tx"
 } as const;
+
+export const SUBJECTS = {
+    /**
+     * Target specific validator for attestation request
+     * Uses request/reply pattern with point-to-point delivery
+     */
+    attestationRequest: (validatorId: string) => `attestation.request.${validatorId}`
+} as const;
+
 
 
 // Combine all event interfaces
