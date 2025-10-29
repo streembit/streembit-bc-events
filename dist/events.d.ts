@@ -80,6 +80,7 @@ export declare const EVENTS: {
     readonly VALIDATOR_ATTESTATION: "validator:attestation";
     readonly ATTESTATIONS_COMPLETE: "attestations:complete";
     readonly ATTESTATION_REQUEST: "attestation:request";
+    readonly VALIDATOR_HEARTBEAT: "validator:heartbeat";
     readonly REGISTRY_NODES_UPDATED: "registry:nodes-updated";
     readonly REGISTRY_VALIDATORS_UPDATED: "registry:validators-updated";
     readonly CONSENSUS_ROLE_CHANGED: "consensus:role-changed";
@@ -245,6 +246,7 @@ export interface Events {
         tx: Transaction;
         creatorId: string;
     }) => void;
+    [EVENTS.VALIDATOR_HEARTBEAT]: (valiadtorId: string) => void;
     /**
      * Emitted when accountable/creator nodes list changes
      * Source: Registry service
