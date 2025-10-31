@@ -99,7 +99,7 @@ export type RequestErrorReason = (typeof REQUEST_ERROR_REASON)[keyof typeof REQU
 
 export interface RequestFailure {
     success: false;
-    reason: typeof REQUEST_ERROR_REASON;
+    reason: RequestErrorReason;
     error: string ;
 }
 

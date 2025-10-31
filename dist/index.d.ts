@@ -27,7 +27,7 @@ export declare const REQUEST_ERROR_REASON: {
 export type RequestErrorReason = (typeof REQUEST_ERROR_REASON)[keyof typeof REQUEST_ERROR_REASON];
 export interface RequestFailure {
     success: false;
-    reason: typeof REQUEST_ERROR_REASON;
+    reason: RequestErrorReason;
     error: string;
 }
 export type AttestationReplyPayload = {
