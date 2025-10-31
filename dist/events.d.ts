@@ -68,6 +68,10 @@ export type ConsrtiumApprovalResult = {
     };
     rejectedReason?: string;
 };
+export type ValidatorHeartbeatPayload = {
+    validatorId: string;
+    timestamp: number;
+};
 export declare const EVENTS: {
     readonly TRANSACTION_SUBMIT: "tx:submit-transaction";
     readonly TRANSACTION_RESPONSE: "tx:transaction-response";
@@ -246,7 +250,7 @@ export interface Events {
         tx: Transaction;
         creatorId: string;
     }) => void;
-    [EVENTS.VALIDATOR_HEARTBEAT]: (valiadtorId: string) => void;
+    [EVENTS.VALIDATOR_HEARTBEAT]: (payload: ValidatorHeartbeatPayload) => void;
     /**
      * Emitted when accountable/creator nodes list changes
      * Source: Registry service

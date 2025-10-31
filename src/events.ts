@@ -48,6 +48,12 @@ export type ConsrtiumApprovalResult= {
     rejectedReason?: string;
 };
 
+export type ValidatorHeartbeatPayload = {
+    validatorId: string;
+    timestamp: number;   // milliseconds since epoch
+};
+
+
 // Export event names as constants for easy reference
 export const EVENTS = {
     // CLI
@@ -274,7 +280,7 @@ export interface Events {
         creatorId: string;
     }) => void;
 
-    [EVENTS.VALIDATOR_HEARTBEAT]: (valiadtorId: string) => void;
+    [EVENTS.VALIDATOR_HEARTBEAT]: (payload: ValidatorHeartbeatPayload) => void;
 
 
     // ============================================================================

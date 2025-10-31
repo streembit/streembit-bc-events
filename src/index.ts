@@ -79,7 +79,8 @@ export type {
     ContractTXValidateSigPayload,
     ContractConfigGetGenesisKeysPayload,
     GenesisPublicKeyInfo,
-    ContractConfigGetGenesisPublicKeysResponse
+    ContractConfigGetGenesisPublicKeysResponse,
+    ValidatorHeartbeatPayload
 } from './events';
 
 export type EventName = keyof BlockchainEvents; // "network:broadcast-tx" | "network:broadcast-block"
@@ -139,10 +140,6 @@ export interface Requests {
     };
 }
 
-export type ValidatorHeartbeatPayload = {
-    validatorId: string;
-    timestamp: number;   // milliseconds since epoch
-};
 
 export type RequestPayloads = { [K in keyof Requests]: Requests[K]["req"] };
 export type ReplyPayloads = { [K in keyof Requests]: Requests[K]["res"] };
