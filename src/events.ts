@@ -827,7 +827,9 @@ export const SUBJECTS = {
      * Target specific validator for attestation request
      * Uses request/reply pattern with point-to-point delivery
      */
-    attestationRequest: (validatorId: string) => `attestation.request.${validatorId}`
+    attestationRequest: (validatorId: string) => `attestation.request.${validatorId}`,
+
+    validatorHeartbeat: (validatorId: string) => `validator.heartbeat.${validatorId}`,
 } as const;
 
 
