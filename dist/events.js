@@ -92,5 +92,6 @@ exports.SUBJECTS = {
      * Target specific validator for attestation request
      * Uses request/reply pattern with point-to-point delivery
      */
-    attestationRequest: (validatorId) => `attestation.request.${validatorId}`
+    attestationRequest: (validatorId) => `attestation.request.${validatorId}`,
+    validatorHeartbeat: (validatorId) => `validator.heartbeat.${validatorId}`,
 };

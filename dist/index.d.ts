@@ -82,6 +82,10 @@ export interface Requests {
         res: AttestationReplyPayload;
     };
 }
+export type ValidatorHeartbeatPayload = {
+    validatorId: string;
+    timestamp: number;
+};
 export type RequestPayloads = {
     [K in keyof Requests]: Requests[K]["req"];
 };

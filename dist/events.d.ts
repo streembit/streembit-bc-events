@@ -668,6 +668,7 @@ export declare const SUBJECTS: {
      * Uses request/reply pattern with point-to-point delivery
      */
     readonly attestationRequest: (validatorId: string) => string;
+    readonly validatorHeartbeat: (validatorId: string) => string;
 };
 type BlockchainEvents = Events;
 export type { BlockchainEvents };
