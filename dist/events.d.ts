@@ -41,6 +41,14 @@ export type ContractEncodingToJsonPayload = {
     requestId: string;
     data: any;
 };
+export type ContractEncodingEncodeDeterministicPayload = {
+    requestId: string;
+    data: any;
+};
+export type ContractEncodingDecodeDeterministicPayload = {
+    requestId: string;
+    data: any;
+};
 export type ContractTXValidateSigPayload = {
     requestId: string;
     transaction: Transaction;
@@ -122,6 +130,8 @@ export declare const EVENTS: {
     readonly CONTRACT_MATH_SUBTRACT: "contract:math.subtract";
     readonly CONTRACT_MATH_COMPARE: "contract:math.compare";
     readonly CONTRACT_ENCODING_TOJSON: "contract:encoding.toJSON";
+    readonly CONTRACT_ENCODING_ENCODEDETERMINISTIC: "contract:encoding.encodedeterministic";
+    readonly CONTRACT_ENCODING_DECODEDETERMINISTIC: "contract:encoding.decodedeterministic";
     readonly CONTRACT_TRANSACTION_VALIDATESIGNATURES: "contract:transaction.validateSignatures";
     readonly CONTRACT_CONFIG_GET_GENESISKEYS: "contract:config.getGenesisKeys";
     readonly CONTRACT_STORAGE_RESPONSE: "contract:storage.response";
@@ -538,6 +548,8 @@ export interface Events {
      * Purpose: Encode data to deterministic JSON
      */
     [EVENTS.CONTRACT_ENCODING_TOJSON]: (request: ContractEncodingToJsonPayload) => void;
+    [EVENTS.CONTRACT_ENCODING_ENCODEDETERMINISTIC]: (request: ContractEncodingEncodeDeterministicPayload) => void;
+    [EVENTS.CONTRACT_ENCODING_DECODEDETERMINISTIC]: (request: ContractEncodingDecodeDeterministicPayload) => void;
     /**
      * Transaction validate signatures request
      * Source: Smart contracts

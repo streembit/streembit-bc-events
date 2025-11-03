@@ -14,7 +14,7 @@ declare class EventHandler extends EventEmitter {
 declare const _default: EventHandler;
 export default _default;
 export { EVENTS } from './events';
-export type { BlockchainEvents, SubmitTransactionPayload, PeerBlockInboundPayload, ContractStorageGetPayload, ContractCryptoVerifyPayload, ContractCryptoHashPayload, ContractAccountGetBalancePayload, ContractMathDecimalPayload, ContractMathBinaryPayload, ContractEncodingToJsonPayload, ContractTXValidateSigPayload, ContractConfigGetGenesisKeysPayload, GenesisPublicKeyInfo, ContractConfigGetGenesisPublicKeysResponse, ValidatorHeartbeatPayload } from './events';
+export type { BlockchainEvents, SubmitTransactionPayload, PeerBlockInboundPayload, ContractStorageGetPayload, ContractCryptoVerifyPayload, ContractCryptoHashPayload, ContractAccountGetBalancePayload, ContractMathDecimalPayload, ContractMathBinaryPayload, ContractEncodingToJsonPayload, ContractEncodingDecodeDeterministicPayload, ContractEncodingEncodeDeterministicPayload, ContractTXValidateSigPayload, ContractConfigGetGenesisKeysPayload, GenesisPublicKeyInfo, ContractConfigGetGenesisPublicKeysResponse, ValidatorHeartbeatPayload } from './events';
 export type EventName = keyof BlockchainEvents;
 export type EventPayloads = {
     [K in keyof BlockchainEvents]: Parameters<BlockchainEvents[K]>[0];

@@ -64,6 +64,8 @@ exports.EVENTS = {
     CONTRACT_MATH_SUBTRACT: 'contract:math.subtract',
     CONTRACT_MATH_COMPARE: 'contract:math.compare',
     CONTRACT_ENCODING_TOJSON: 'contract:encoding.toJSON',
+    CONTRACT_ENCODING_ENCODEDETERMINISTIC: "contract:encoding.encodedeterministic",
+    CONTRACT_ENCODING_DECODEDETERMINISTIC: "contract:encoding.decodedeterministic",
     CONTRACT_TRANSACTION_VALIDATESIGNATURES: 'contract:transaction.validateSignatures',
     CONTRACT_CONFIG_GET_GENESISKEYS: 'contract:config.getGenesisKeys',
     // Contract Service Events - Responses

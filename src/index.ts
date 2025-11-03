@@ -76,6 +76,8 @@ export type {
     ContractMathDecimalPayload,
     ContractMathBinaryPayload,
     ContractEncodingToJsonPayload,
+    ContractEncodingDecodeDeterministicPayload,
+    ContractEncodingEncodeDeterministicPayload,
     ContractTXValidateSigPayload,
     ContractConfigGetGenesisKeysPayload,
     GenesisPublicKeyInfo,

@@ -23,6 +23,8 @@ export type ContractAccountGetBalancePayload = { requestId: string; address: str
 export type ContractMathDecimalPayload = { requestId: string; value: string };
 export type ContractMathBinaryPayload = { requestId: string; a: string; b: string };
 export type ContractEncodingToJsonPayload = { requestId: string; data: any };
+export type ContractEncodingEncodeDeterministicPayload = { requestId: string; data: any };
+export type ContractEncodingDecodeDeterministicPayload = { requestId: string; data: any };
 export type ContractTXValidateSigPayload = { requestId: string; transaction: Transaction };
 export type ContractConfigGetGenesisKeysPayload = { requestId: string; };
 export type GenesisPublicKeyInfo = {
@@ -128,6 +130,8 @@ export const EVENTS = {
     CONTRACT_MATH_SUBTRACT: 'contract:math.subtract',
     CONTRACT_MATH_COMPARE: 'contract:math.compare',
     CONTRACT_ENCODING_TOJSON: 'contract:encoding.toJSON',
+    CONTRACT_ENCODING_ENCODEDETERMINISTIC: "contract:encoding.encodedeterministic",
+    CONTRACT_ENCODING_DECODEDETERMINISTIC: "contract:encoding.decodedeterministic",
     CONTRACT_TRANSACTION_VALIDATESIGNATURES: 'contract:transaction.validateSignatures',
     CONTRACT_CONFIG_GET_GENESISKEYS: 'contract:config.getGenesisKeys',
 
@@ -703,6 +707,8 @@ export interface Events {
      * Purpose: Encode data to deterministic JSON
      */
     [EVENTS.CONTRACT_ENCODING_TOJSON]: (request: ContractEncodingToJsonPayload) => void;
+    [EVENTS.CONTRACT_ENCODING_ENCODEDETERMINISTIC]: (request: ContractEncodingEncodeDeterministicPayload) => void;
+    [EVENTS.CONTRACT_ENCODING_DECODEDETERMINISTIC]: (request: ContractEncodingDecodeDeterministicPayload) => void;
 
     /**
      * Transaction validate signatures request
