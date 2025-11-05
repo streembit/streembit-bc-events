@@ -68,6 +68,8 @@ exports.EVENTS = {
     CONTRACT_ENCODING_DECODEDETERMINISTIC: "contract:encoding.decodedeterministic",
     CONTRACT_TRANSACTION_VALIDATESIGNATURES: 'contract:transaction.validateSignatures',
     CONTRACT_CONFIG_GET_GENESISKEYS: 'contract:config.getGenesisKeys',
+    CONTRACT_MATH_MULTIPLY: 'contract:math.multiply',
+    CONTRACT_MATH_DIVIDE: 'contract:math.divide',
     // Contract Service Events - Responses
     CONTRACT_STORAGE_RESPONSE: 'contract:storage.response',
     CONTRACT_CRYPTO_VERIFY_RESPONSE: 'contract:crypto.verify.response',

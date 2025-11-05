@@ -134,6 +134,8 @@ export declare const EVENTS: {
     readonly CONTRACT_ENCODING_DECODEDETERMINISTIC: "contract:encoding.decodedeterministic";
     readonly CONTRACT_TRANSACTION_VALIDATESIGNATURES: "contract:transaction.validateSignatures";
     readonly CONTRACT_CONFIG_GET_GENESISKEYS: "contract:config.getGenesisKeys";
+    readonly CONTRACT_MATH_MULTIPLY: "contract:math.multiply";
+    readonly CONTRACT_MATH_DIVIDE: "contract:math.divide";
     readonly CONTRACT_STORAGE_RESPONSE: "contract:storage.response";
     readonly CONTRACT_CRYPTO_VERIFY_RESPONSE: "contract:crypto.verify.response";
     readonly CONTRACT_CRYPTO_HASH_RESPONSE: "contract:crypto.hash.response";
@@ -550,6 +552,8 @@ export interface Events {
     [EVENTS.CONTRACT_ENCODING_TOJSON]: (request: ContractEncodingToJsonPayload) => void;
     [EVENTS.CONTRACT_ENCODING_ENCODEDETERMINISTIC]: (request: ContractEncodingEncodeDeterministicPayload) => void;
     [EVENTS.CONTRACT_ENCODING_DECODEDETERMINISTIC]: (request: ContractEncodingDecodeDeterministicPayload) => void;
+    [EVENTS.CONTRACT_MATH_MULTIPLY]: (request: ContractMathBinaryPayload) => void;
+    [EVENTS.CONTRACT_MATH_DIVIDE]: (request: ContractMathBinaryPayload) => void;
     /**
      * Transaction validate signatures request
      * Source: Smart contracts

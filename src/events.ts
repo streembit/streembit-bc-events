@@ -134,6 +134,9 @@ export const EVENTS = {
     CONTRACT_ENCODING_DECODEDETERMINISTIC: "contract:encoding.decodedeterministic",
     CONTRACT_TRANSACTION_VALIDATESIGNATURES: 'contract:transaction.validateSignatures',
     CONTRACT_CONFIG_GET_GENESISKEYS: 'contract:config.getGenesisKeys',
+    CONTRACT_MATH_MULTIPLY: 'contract:math.multiply',
+    CONTRACT_MATH_DIVIDE: 'contract:math.divide',
+
 
     // Contract Service Events - Responses
     CONTRACT_STORAGE_RESPONSE: 'contract:storage.response',
@@ -709,6 +712,8 @@ export interface Events {
     [EVENTS.CONTRACT_ENCODING_TOJSON]: (request: ContractEncodingToJsonPayload) => void;
     [EVENTS.CONTRACT_ENCODING_ENCODEDETERMINISTIC]: (request: ContractEncodingEncodeDeterministicPayload) => void;
     [EVENTS.CONTRACT_ENCODING_DECODEDETERMINISTIC]: (request: ContractEncodingDecodeDeterministicPayload) => void;
+    [EVENTS.CONTRACT_MATH_MULTIPLY]: (request: ContractMathBinaryPayload) => void;
+    [EVENTS.CONTRACT_MATH_DIVIDE]: (request: ContractMathBinaryPayload) => void;
 
     /**
      * Transaction validate signatures request
