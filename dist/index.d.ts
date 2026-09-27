@@ -21,8 +21,8 @@ export type EventPayloads = {
 };
 export type RequestName = (typeof REQUESTS)[keyof typeof REQUESTS];
 export declare const REQUEST_ERROR_REASON: {
-    readonly VALIDATION: "validation";
-    readonly SYSTEM: "system";
+    readonly VALIDATION: 'validation';
+    readonly SYSTEM: 'system';
 };
 export type RequestErrorReason = (typeof REQUEST_ERROR_REASON)[keyof typeof REQUEST_ERROR_REASON];
 export interface RequestFailure {
