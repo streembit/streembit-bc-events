@@ -3,7 +3,7 @@
 
 import { BlockchainEvents, REQUESTS } from './events';
 import { EventEmitter } from 'events';
-import type { Block, Transaction, ValidatorAttestation } from 'streembit-bc-types';
+import type { Block, Transaction, SetAttestation } from 'streembit-bc-types';
 
 const singleton = Symbol('singleton');
 const singletonEnforcer = Symbol('singletonEnforcer');
@@ -110,6 +110,9 @@ export type AttestationReplyPayload =
     | { success: true; attestation: ValidatorAttestation }
     | RequestFailure;
 
+export type SetReplyPayload =
+    | { success: true; attestation: SetAttestation }
+    | RequestFailure;
 
 /**
  * Per-request typed request/response payloads:
@@ -131,14 +134,14 @@ export interface Requests {
         }; 
     };
 
-    [REQUESTS.ATTEST_TX]: {
-        req: {
-            requestId: string;
-            tx: Transaction;
-            creatorId: string;
-            validatorId: string;  
-        };
-        res:  AttestationReplyPayload;
+    [REQUESTS.VALIDATE_SET]: {
+        req: { 
+            setNumber: number; 
+            parentHash: string; 
+            transactions: Transaction[]; 
+            creatorId: string; 
+            validatorId: string };
+        res: SetReplyPayload;
     };
 }
 
