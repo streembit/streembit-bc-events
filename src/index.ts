@@ -106,10 +106,6 @@ export interface RequestFailure {
     error: string ;
 }
 
-export type AttestationReplyPayload =
-    | { success: true; attestation: ValidatorAttestation }
-    | RequestFailure;
-
 export type SetReplyPayload =
     | { success: true; attestation: SetAttestation }
     | RequestFailure;
