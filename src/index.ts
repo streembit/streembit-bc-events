@@ -107,7 +107,8 @@ export interface RequestFailure {
 }
 
 export type SetReplyPayload =
-    | { success: true; attestation: SetAttestation }
+    // reasons: the validator's reason per transaction it found invalid, by txid; unsigned, for the creator's mismatch alarm only
+    | { success: true; attestation: SetAttestation; reasons?: Record<string, string> }
     | RequestFailure;
 
 /**

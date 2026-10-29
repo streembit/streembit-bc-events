@@ -33,6 +33,7 @@ export interface RequestFailure {
 export type SetReplyPayload = {
     success: true;
     attestation: SetAttestation;
+    reasons?: Record<string, string>;
 } | RequestFailure;
 /**
  * Per-request typed request/response payloads:
