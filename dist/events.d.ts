@@ -680,7 +680,7 @@ export declare const REQUESTS: {
     readonly GET_BLOCK: "rpc:get-block";
     readonly SUBMIT_TX: "rpc:submit-tx";
     readonly GET_BLOCKS_FROM: "rpc:get-blocks-from";
-    readonly ATTEST_TX: "attestation:attest-tx";
+    readonly VALIDATE_SET: "set:validate";
 };
 export declare const SUBJECTS: {
     /**

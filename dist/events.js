@@ -89,7 +89,7 @@ exports.REQUESTS = {
     GET_BLOCK: "rpc:get-block",
     SUBMIT_TX: "rpc:submit-tx",
     GET_BLOCKS_FROM: "rpc:get-blocks-from",
-    ATTEST_TX: "attestation:attest-tx"
+    VALIDATE_SET: "set:validate"
 };
 exports.SUBJECTS = {
     /**
