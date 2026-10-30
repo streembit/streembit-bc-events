@@ -27,6 +27,7 @@ export type ContractEncodingEncodeDeterministicPayload = { requestId: string; da
 export type ContractEncodingDecodeDeterministicPayload = { requestId: string; data: any };
 export type ContractTXValidateSigPayload = { requestId: string; transaction: Transaction };
 export type ContractConfigGetGenesisKeysPayload = { requestId: string; };
+export type ContractAddressIsBitcoinAddressPayload = { requestId: string; address: string; network: string };
 export type GenesisPublicKeyInfo = {
     genesisId: string;
     publicKey: string;
@@ -136,6 +137,7 @@ export const EVENTS = {
     CONTRACT_CONFIG_GET_GENESISKEYS: 'contract:config.getGenesisKeys',
     CONTRACT_MATH_MULTIPLY: 'contract:math.multiply',
     CONTRACT_MATH_DIVIDE: 'contract:math.divide',
+    CONTRACT_ADDRESS_ISBITCOINADDRESS: 'contract:address.isBitcoinAddress',
 
 
     // Contract Service Events - Responses
@@ -826,6 +828,13 @@ export interface Events {
      * 
      */
     [EVENTS.CONTRACT_CONFIG_GET_GENESISKEYS_RESPONSE]: (response: ContractConfigGetGenesisPublicKeysResponse) => void;
+
+    /**
+     * Bitcoin address format check
+     * Source: Smart contracts (external_payment_v1 createOffer)
+     * Consumers: Contract engine, answered by the SDK's isBitcoinAddress
+     */
+    [EVENTS.CONTRACT_ADDRESS_ISBITCOINADDRESS]: (request: ContractAddressIsBitcoinAddressPayload) => void;
 
 }
 

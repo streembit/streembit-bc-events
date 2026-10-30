@@ -56,6 +56,11 @@ export type ContractTXValidateSigPayload = {
 export type ContractConfigGetGenesisKeysPayload = {
     requestId: string;
 };
+export type ContractAddressIsBitcoinAddressPayload = {
+    requestId: string;
+    address: string;
+    network: string;
+};
 export type GenesisPublicKeyInfo = {
     genesisId: string;
     publicKey: string;
@@ -136,6 +141,7 @@ export declare const EVENTS: {
     readonly CONTRACT_CONFIG_GET_GENESISKEYS: 'contract:config.getGenesisKeys';
     readonly CONTRACT_MATH_MULTIPLY: 'contract:math.multiply';
     readonly CONTRACT_MATH_DIVIDE: 'contract:math.divide';
+    readonly CONTRACT_ADDRESS_ISBITCOINADDRESS: 'contract:address.isBitcoinAddress';
     readonly CONTRACT_STORAGE_RESPONSE: 'contract:storage.response';
     readonly CONTRACT_CRYPTO_VERIFY_RESPONSE: 'contract:crypto.verify.response';
     readonly CONTRACT_CRYPTO_HASH_RESPONSE: 'contract:crypto.hash.response';
@@ -675,6 +681,12 @@ export interface Events {
      *
      */
     [EVENTS.CONTRACT_CONFIG_GET_GENESISKEYS_RESPONSE]: (response: ContractConfigGetGenesisPublicKeysResponse) => void;
+    /**
+     * Bitcoin address format check
+     * Source: Smart contracts (external_payment_v1 createOffer)
+     * Consumers: Contract engine, answered by the SDK's isBitcoinAddress
+     */
+    [EVENTS.CONTRACT_ADDRESS_ISBITCOINADDRESS]: (request: ContractAddressIsBitcoinAddressPayload) => void;
 }
 export declare const REQUESTS: {
     readonly GET_BLOCK: "rpc:get-block";

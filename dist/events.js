@@ -70,6 +70,7 @@ exports.EVENTS = {
     CONTRACT_CONFIG_GET_GENESISKEYS: 'contract:config.getGenesisKeys',
     CONTRACT_MATH_MULTIPLY: 'contract:math.multiply',
     CONTRACT_MATH_DIVIDE: 'contract:math.divide',
+    CONTRACT_ADDRESS_ISBITCOINADDRESS: 'contract:address.isBitcoinAddress',
     // Contract Service Events - Responses
     CONTRACT_STORAGE_RESPONSE: 'contract:storage.response',
     CONTRACT_CRYPTO_VERIFY_RESPONSE: 'contract:crypto.verify.response',

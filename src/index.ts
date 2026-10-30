@@ -80,6 +80,7 @@ export type {
     ContractEncodingEncodeDeterministicPayload,
     ContractTXValidateSigPayload,
     ContractConfigGetGenesisKeysPayload,
+    ContractAddressIsBitcoinAddressPayload,
     GenesisPublicKeyInfo,
     ContractConfigGetGenesisPublicKeysResponse,
     ValidatorHeartbeatPayload
