@@ -1,0 +1,53 @@
+{
+  "name": "streembit-bc-events",
+  "version": "1.0.0",
+  "description": "Streembit Blockchain Events",
+  "license": "SEE LICENSE IN LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/streembit/streembit-bc-events.git"
+  },
+  "author": "Zovolt Ltd, UK <tzpardi@streembit.com>",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rimraf dist",
+    "prebuild": "npm run clean",
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "test": "node --import=tsx --test tests/**/*.test.ts",
+    "test:watch": "node --import=tsx --test --watch tests/**/*.test.ts",
+    "test:coverage": "node --import=tsx --test --experimental-test-coverage tests/**/*.test.ts",
+    "type-check": "tsc --noEmit"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js"
+    }
+  },
+  "bugs": {
+    "url": "https://github.com/streembit/streembit-bc-events/issues"
+  },
+  "homepage": "https://github.com/streembit/streembit-bc-events#readme",
+  "directories": {
+    "test": "test"
+  },
+  "keywords": [
+    "streembit blockchain"
+  ],
+  "devDependencies": {
+    "@types/node": "22.20.4",
+    "rimraf": "^6.0.1",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "tsx": "4.23.15",
+    "typescript": "7.0.2"
+  },
+  "dependencies": {
+    "streembit-bc-types": "github:streembit/streembit-bc-types"
+  }
+}
