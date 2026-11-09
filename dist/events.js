@@ -72,6 +72,7 @@ exports.EVENTS = {
     CONTRACT_MATH_DIVIDE: 'contract:math.divide',
     CONTRACT_ADDRESS_ISBITCOINADDRESS: 'contract:address.isBitcoinAddress',
     CONTRACT_ADDRESS_OWNSADDRESS: 'contract:address.ownsAddress',
+    CONTRACT_REGISTRY_VERIFYANSIGNATURE: 'contract:registry.verifyANSignature',
     // Contract Service Events - Responses
     CONTRACT_STORAGE_RESPONSE: 'contract:storage.response',
     CONTRACT_CRYPTO_VERIFY_RESPONSE: 'contract:crypto.verify.response',

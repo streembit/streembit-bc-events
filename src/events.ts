@@ -29,6 +29,7 @@ export type ContractTXValidateSigPayload = { requestId: string; transaction: Tra
 export type ContractConfigGetGenesisKeysPayload = { requestId: string; };
 export type ContractAddressIsBitcoinAddressPayload = { requestId: string; address: string; network: string };
 export type ContractAddressOwnsAddressPayload = { requestId: string; address: string; publicKey: string };
+export type ContractRegistryVerifyANSignaturePayload = { requestId: string; transaction: Transaction };
 export type GenesisPublicKeyInfo = {
     genesisId: string;
     publicKey: string;
@@ -140,6 +141,7 @@ export const EVENTS = {
     CONTRACT_MATH_DIVIDE: 'contract:math.divide',
     CONTRACT_ADDRESS_ISBITCOINADDRESS: 'contract:address.isBitcoinAddress',
     CONTRACT_ADDRESS_OWNSADDRESS: 'contract:address.ownsAddress',
+    CONTRACT_REGISTRY_VERIFYANSIGNATURE: 'contract:registry.verifyANSignature',
 
 
     // Contract Service Events - Responses
@@ -844,6 +846,13 @@ export interface Events {
      * Consumers: Contract engine, answered by the SDK's publicKeyOwnsAddress
      */
     [EVENTS.CONTRACT_ADDRESS_OWNSADDRESS]: (request: ContractAddressOwnsAddressPayload) => void;
+
+    /**
+     * Accountable Node signature check: one signature, by the Accountable Node key
+     * Source: Smart contracts (the sandbox's verifyANSignature)
+     * Consumers: Contract engine, answered by the registry's verifyANSignature
+     */
+    [EVENTS.CONTRACT_REGISTRY_VERIFYANSIGNATURE]: (request: ContractRegistryVerifyANSignaturePayload) => void;
 
 }
 

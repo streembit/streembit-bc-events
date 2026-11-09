@@ -66,6 +66,10 @@ export type ContractAddressOwnsAddressPayload = {
     address: string;
     publicKey: string;
 };
+export type ContractRegistryVerifyANSignaturePayload = {
+    requestId: string;
+    transaction: Transaction;
+};
 export type GenesisPublicKeyInfo = {
     genesisId: string;
     publicKey: string;
@@ -148,6 +152,7 @@ export declare const EVENTS: {
     readonly CONTRACT_MATH_DIVIDE: 'contract:math.divide';
     readonly CONTRACT_ADDRESS_ISBITCOINADDRESS: 'contract:address.isBitcoinAddress';
     readonly CONTRACT_ADDRESS_OWNSADDRESS: 'contract:address.ownsAddress';
+    readonly CONTRACT_REGISTRY_VERIFYANSIGNATURE: 'contract:registry.verifyANSignature';
     readonly CONTRACT_STORAGE_RESPONSE: 'contract:storage.response';
     readonly CONTRACT_CRYPTO_VERIFY_RESPONSE: 'contract:crypto.verify.response';
     readonly CONTRACT_CRYPTO_HASH_RESPONSE: 'contract:crypto.hash.response';
@@ -699,6 +704,12 @@ export interface Events {
      * Consumers: Contract engine, answered by the SDK's publicKeyOwnsAddress
      */
     [EVENTS.CONTRACT_ADDRESS_OWNSADDRESS]: (request: ContractAddressOwnsAddressPayload) => void;
+    /**
+     * Accountable Node signature check: one signature, by the Accountable Node key
+     * Source: Smart contracts (the sandbox's verifyANSignature)
+     * Consumers: Contract engine, answered by the registry's verifyANSignature
+     */
+    [EVENTS.CONTRACT_REGISTRY_VERIFYANSIGNATURE]: (request: ContractRegistryVerifyANSignaturePayload) => void;
 }
 export declare const REQUESTS: {
     readonly GET_BLOCK: "rpc:get-block";
