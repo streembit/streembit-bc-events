@@ -73,6 +73,9 @@ exports.EVENTS = {
     CONTRACT_ADDRESS_ISBITCOINADDRESS: 'contract:address.isBitcoinAddress',
     CONTRACT_ADDRESS_OWNSADDRESS: 'contract:address.ownsAddress',
     CONTRACT_REGISTRY_VERIFYANSIGNATURE: 'contract:registry.verifyANSignature',
+    CONTRACT_REGISTRY_ACCOUNTABLENODEIDOFADDRESS: 'contract:registry.accountableNodeIdOfAddress',
+    CONTRACT_REGISTRY_ACCOUNTABLENODEKEYOFADDRESS: 'contract:registry.accountableNodeKeyOfAddress',
+    CONTRACT_REGISTRY_ACTIVEVALIDATORKEYS: 'contract:registry.activeValidatorKeys',
     // Contract Service Events - Responses
     CONTRACT_STORAGE_RESPONSE: 'contract:storage.response',
     CONTRACT_CRYPTO_VERIFY_RESPONSE: 'contract:crypto.verify.response',

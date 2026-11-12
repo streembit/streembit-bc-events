@@ -83,6 +83,9 @@ export type {
     ContractAddressIsBitcoinAddressPayload,
     ContractAddressOwnsAddressPayload,
     ContractRegistryVerifyANSignaturePayload,
+    ContractRegistryAccountableNodeIdOfAddressPayload,
+    ContractRegistryAccountableNodeKeyOfAddressPayload,
+    ContractRegistryActiveValidatorKeysPayload,
     GenesisPublicKeyInfo,
     ContractConfigGetGenesisPublicKeysResponse,
     ValidatorHeartbeatPayload

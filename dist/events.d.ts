@@ -70,6 +70,18 @@ export type ContractRegistryVerifyANSignaturePayload = {
     requestId: string;
     transaction: Transaction;
 };
+export type ContractRegistryAccountableNodeIdOfAddressPayload = {
+    requestId: string;
+    address: string;
+};
+export type ContractRegistryAccountableNodeKeyOfAddressPayload = {
+    requestId: string;
+    nodeId: string;
+    address: string;
+};
+export type ContractRegistryActiveValidatorKeysPayload = {
+    requestId: string;
+};
 export type GenesisPublicKeyInfo = {
     genesisId: string;
     publicKey: string;
@@ -153,6 +165,9 @@ export declare const EVENTS: {
     readonly CONTRACT_ADDRESS_ISBITCOINADDRESS: 'contract:address.isBitcoinAddress';
     readonly CONTRACT_ADDRESS_OWNSADDRESS: 'contract:address.ownsAddress';
     readonly CONTRACT_REGISTRY_VERIFYANSIGNATURE: 'contract:registry.verifyANSignature';
+    readonly CONTRACT_REGISTRY_ACCOUNTABLENODEIDOFADDRESS: 'contract:registry.accountableNodeIdOfAddress';
+    readonly CONTRACT_REGISTRY_ACCOUNTABLENODEKEYOFADDRESS: 'contract:registry.accountableNodeKeyOfAddress';
+    readonly CONTRACT_REGISTRY_ACTIVEVALIDATORKEYS: 'contract:registry.activeValidatorKeys';
     readonly CONTRACT_STORAGE_RESPONSE: 'contract:storage.response';
     readonly CONTRACT_CRYPTO_VERIFY_RESPONSE: 'contract:crypto.verify.response';
     readonly CONTRACT_CRYPTO_HASH_RESPONSE: 'contract:crypto.hash.response';
@@ -710,6 +725,24 @@ export interface Events {
      * Consumers: Contract engine, answered by the registry's verifyANSignature
      */
     [EVENTS.CONTRACT_REGISTRY_VERIFYANSIGNATURE]: (request: ContractRegistryVerifyANSignaturePayload) => void;
+    /**
+     * The ID of the ACTIVE Accountable Node with a registered key that owns the address, or null
+     * Source: Smart contracts (the sandbox's registry.accountableNodeIdOfAddress)
+     * Consumers: Contract engine, answered by the registry's accountableNodeIdOfAddress
+     */
+    [EVENTS.CONTRACT_REGISTRY_ACCOUNTABLENODEIDOFADDRESS]: (request: ContractRegistryAccountableNodeIdOfAddressPayload) => void;
+    /**
+     * The registered key of the Accountable Node that owns the address, or null
+     * Source: Smart contracts (the sandbox's registry.accountableNodeKeyOfAddress)
+     * Consumers: Contract engine, answered by the registry's accountableNodeKeyOfAddress
+     */
+    [EVENTS.CONTRACT_REGISTRY_ACCOUNTABLENODEKEYOFADDRESS]: (request: ContractRegistryAccountableNodeKeyOfAddressPayload) => void;
+    /**
+     * The public keys of the ACTIVE validators
+     * Source: Smart contracts (the sandbox's registry.activeValidatorKeys)
+     * Consumers: Contract engine, answered by the registry's activeValidatorKeys
+     */
+    [EVENTS.CONTRACT_REGISTRY_ACTIVEVALIDATORKEYS]: (request: ContractRegistryActiveValidatorKeysPayload) => void;
 }
 export declare const REQUESTS: {
     readonly GET_BLOCK: "rpc:get-block";
